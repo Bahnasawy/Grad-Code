@@ -3,3 +3,9 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  .subsection {
+    @apply pl-2 border-l border-gray-50;
+  }
+}
