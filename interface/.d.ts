@@ -1,29 +1,45 @@
 type files = {
   [author: string]: {
-    [text: string]: string
+    [text: string]: {
+      content: string
+      highlight: {
+        [feature: string]: number[]
+      }
+    }
   }
 }
 
-type definition = [
-  {
-    word: string
-    phonetics?: [
+type features = {
+  [feature: string]: {
+    [author: string]: number
+  }
+  Disputed: {
+    [author: string]: number
+  }
+}
+
+type definition =
+  | [
       {
-        text: string
-        audio: string
-      }
-    ]
-    meanings?: [
-      {
-        partOfSpeech: string
-        definitions: [
+        word: string
+        phonetics: [
           {
-            definition: string
-            example: string
-            synonyms?: string[]
+            text: string
+            audio: string
+          }
+        ]
+        meanings: [
+          {
+            partOfSpeech: string
+            definitions: [
+              {
+                definition: string
+                example: string
+                synonyms?: string[]
+              }
+            ]
           }
         ]
       }
     ]
-  }
-]
+  | undefined
