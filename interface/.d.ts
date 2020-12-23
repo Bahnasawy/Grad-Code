@@ -1,13 +1,15 @@
-type files = {
-  [author: string]: {
-    [text: string]: {
-      content: string
-      highlight: {
-        [feature: string]: number[]
+type files =
+  | {
+      [author: string]: {
+        [text: string]: {
+          content: string
+          highlight: {
+            [feature: string]: number[]
+          }
+        }
       }
     }
-  }
-}
+  | undefined
 
 type features = {
   [feature: string]: {

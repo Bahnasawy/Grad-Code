@@ -24,15 +24,16 @@ followers = [unmarkedFollower, markedFollower]
 
 result = parseText(text, features)
 
-highlight = []
-for par, paragraph in enumerate(result[1]):
-    temp = []
-    for sen, sent in enumerate(paragraph):
-        for word in sent:
-            temp.append(result[0][par][sen][word])
-    highlight.append(temp)
+print(result)
+# highlight = []
+# for par, paragraph in enumerate(result[1]):
+#     temp = []
+#     for sen, sent in enumerate(paragraph):
+#         for word in sent:
+#             temp.append(result[0][par][sen][word])
+#     highlight.append(temp)
 
-for word in highlight: print(word)
+# for word in highlight: print(word)
 
 
 

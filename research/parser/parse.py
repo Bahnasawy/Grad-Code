@@ -29,7 +29,7 @@ def parseText(text, features):
 
 
     # Clean Up
-    featuresTags = []
+    featuresTags = {}
     for idx, feature in enumerate(features):
         sents = []
         for sent in results[idx]:
@@ -43,7 +43,7 @@ def parseText(text, features):
                 else:
                     temp.append([tag[0],tag[1]])
             sents.append(temp)
-        featuresTags.append(sents)
+        featuresTags[features[idx]["name"]] = sents
 
 
     # Separation of features results
