@@ -24,7 +24,7 @@ followers = [unmarkedFollower, markedFollower]
 
 result = parseText(text, features)
 
-print(result)
+# print(result)
 # highlight = []
 # for par, paragraph in enumerate(result[1]):
 #     temp = []
