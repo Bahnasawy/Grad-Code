@@ -11,9 +11,7 @@ const Index = () => {
     selectedTitle: "",
   })
   const [definition, setDefinition]: [definition, Function] = useState()
-  const [hover, setHover]: [number | undefined, Function] = useState()
   const [files, setFiles]: [files, Function] = useState()
-  const [stat, setStat]: [number, Function] = useState(0)
   const [selectedFeature, setSelectedFeature]: [
     string | undefined,
     Function
@@ -73,8 +71,6 @@ const Index = () => {
               selectedTitle,
               generateRandomString,
               getDefinition,
-              setHover,
-              hover,
               selectedFeature,
             }}
           />

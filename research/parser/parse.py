@@ -53,7 +53,7 @@ def parseText(text, features):
         for sent in sents:
             tagList = []
             for idxTag, tag in enumerate(sent):
-                if type(tag[0]) is not str and idxTag != len(sent) - 1 and sent[idxTag + 1][1] in features[idxFeature]["follower"][tag[1]] and idxTag == 0:
+                if type(tag[0]) is not str and idxTag != len(sent) - 1 and sent[idxTag + 1][1] in features[idxFeature]["follower"][tag[1]]:
                     tagList.append(idxTag)
             temp.append(tagList)
         featuresIndicies.append(temp)
