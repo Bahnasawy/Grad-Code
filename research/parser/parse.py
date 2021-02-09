@@ -28,7 +28,7 @@ def parseText(text, features):
         results.append(temp)
 
 
-    # Clean Up
+    # Clean Up and Separation of features results
     featuresTags = {}
     for idx, feature in enumerate(features):
         sents = []
@@ -46,28 +46,27 @@ def parseText(text, features):
         featuresTags[features[idx]["name"]] = sents
 
 
-    # Separation of features results
-    featuresIndicies = []
-    for idxFeature, sents in enumerate(featuresTags):
-        temp = []
-        for sent in sents:
-            tagList = []
+    featuresIndicies = {}
+    for feature in features:
+        featureTemp = []
+        for idxSent, sent in enumerate(featuresTags[feature["name"]]):
+            tagTemp = -1
             for idxTag, tag in enumerate(sent):
-                if type(tag[0]) is not str and idxTag != len(sent) - 1 and sent[idxTag + 1][1] in features[idxFeature]["follower"][tag[1]]:
-                    tagList.append(idxTag)
-            temp.append(tagList)
-        featuresIndicies.append(temp)
-    
-    # return (featuresTags, featuresIndicies)
+                if type(tag[0]) is not str and idxTag != len(sent) - 1 and sent[idxTag + 1][1] in feature["follower"][tag[1]]:
+                    tagTemp = idxTag
+                    break
+            featureTemp.append(tagTemp)
+        featuresIndicies[feature["name"]] = featureTemp
+
+
+
     giveBack = {
-        "Johnny Silverhand": {
+        "Obama": {
             "Text 1": {
                 "content": featuresTags,
-                "highlight": {}
+                "highlight": featuresIndicies
             },
         } 
     }
 
-    for idx, feature in enumerate(features):
-        giveBack["Johnny Silverhand"]["Text 1"]["highlight"][feature["name"]] = featuresIndicies[idx]
     return giveBack
