@@ -19,9 +19,23 @@
 							{{ selectedFeature }}, {{ token[1] }}
 						</span>
 					</span>
-					<span v-else>
-						<span v-if="Array.isArray(token[0])"> {{ token[0].join(" ") }} {{ " " }} </span>
-						<span v-else>{{ token[0] }}{{ " " }}</span>
+					<span v-else class="relative group">
+						<span v-if="Array.isArray(token[0])">
+							<span> {{ token[0].join(" ") }} {{ " " }} </span>
+							<span
+								class="absolute left-0 invisible group-hover:visible z-10 px-1 bg-gray-700 opacity-0 top-full text-gray-50 group-hover:opacity-100 mt-0.5 whitespace-nowrap"
+							>
+								{{ token[1] }}
+							</span>
+						</span>
+						<span v-else
+							><span>{{ token[0] }}{{ " " }}</span>
+							<span
+								class="absolute left-0 invisible group-hover:visible z-10 px-1 bg-gray-700 opacity-0 top-full text-gray-50 group-hover:opacity-100 mt-0.5 whitespace-nowrap"
+							>
+								{{ token[1] }}
+							</span></span
+						>
 					</span> </span
 				>{{ "." }}
 				<br />

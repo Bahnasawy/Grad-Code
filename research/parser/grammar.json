@@ -10,7 +10,7 @@
 					"Contains": "(<DT>?<JJ>*<NN>|<NNS>|<NNP>|<NNPS>)|(<NN>|<NNS>|<NNP>+|<NNPS>)|<PRP>|(<PRP$> <NN>|<NNS>)|<DT>",
 					"Followed By": "<VB>|<VBD>|<VBZ>|<VBP>"
 				},
-				"<NCH> (Nominalized Clause as Head)": {
+				"<NCH> (Nomina Group Clause as Head)": {
 					"Contains": "<WP><PRP>(<VB>|<VBD>)",
 					"Followed By": "<VBZ>"
 				}

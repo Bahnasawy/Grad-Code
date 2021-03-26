@@ -1,7 +1,7 @@
 markedGrammar = '''
-ADVP: {(<NP>?(<RB>|<RBR>)<NP>?)|(<CC> <RB>)}
+ADVP: {(<NP>?(<RB>|<RBR>)?<NP>?)|(<CC> <RB>)}
 PP: {<IN><DT>?}
-CONJP: {<CC>}
+CONJP: {<CC>|<RB><IN>}
 NP: {<NNP>(<CC> <NNP>)?}
 '''
 
