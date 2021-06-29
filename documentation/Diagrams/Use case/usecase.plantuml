@@ -1,0 +1,34 @@
+@startuml usecase
+skinparam actorStyle awesome
+
+(Create Project) as (CP)
+(Create Grammar) as (CG)
+(Update Grammar) as (UG)
+(Choose Grammar) as (ChG)
+(Upload Texts) as (UT)
+(Return Analysis) as (RA)
+(Update Analysis) as (UA)
+(Update Tag) as (UpT)
+
+
+User -right-> (CP)
+User -right-> (CG)
+User -right-> (UG)
+User -up-> (UpT)
+
+System -down-> (RA)
+System -left-> (UA)
+
+(UG) ..> (CG) :<<include>>
+
+(CP) .right.> (UT) :<<include>>
+(CP) ..> (ChG) :<<include>>
+(ChG) .left.> (CG) :<<include>>
+
+(RA) .down.> (CP) :<<include>>
+(UpT) .> (RA) :<<include>>
+(UA) .> (UpT) :<<include>>
+
+
+
+@enduml

@@ -1,0 +1,331 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{float}
+\restylefloat{table}
+\captionsetup[table]{name=Requirement}
+
+\title{
+    {
+    \includegraphics[width=4.5cm, height=3cm]{Images/CSLogo.jpg}
+    \includegraphics[width=3cm, height=2.5cm]{Images/MSALogo.jpg}
+    }
+\\
+    {
+    Software requirement specification document for project \\ Forensics Linguistics and Authorship Attribution using Stylometry
+    }
+}
+
+
+
+\author{Yousef Mohamed - 184367 \\ Supervised by: Dr. Wael Gomaa}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\subsection{Purpose of this document}
+The purpose of this document is to define the requirements to be met by the system to be classified as successful and functional.
+\subsection{Scope of this document}
+% Describes the scope of this requirements definition effort. Introduces the requirements elicitation team, including users, customers, system engineers, and developers.
+The system is wholly engineered and developed by me, with the supervision of Dr. Wael Gomaa. The users are the professors of MSA University's Faculty of Languages.
+% This section also details any constraints that were placed upon the requirements elicitation process, such as schedules, costs, or the software engineering environment used to develop requirements.
+\subsection{Overview}
+The system will take a collection of texts, formatted and organized by author, to be analysed by the system through a set of stylometric and linguistic features, and will return the extracted features embedded in the text with a statistical report of the analysis. The system will also require a selection of predefined grammar sets or new grammar sets defined by the user.
+
+\subsection{Business Context}
+The MSA University Faculty of Languages is the organization supporting and contributing to the project.
+
+\section{General Description}
+\subsection{Product Functions}
+\begin{enumerate}
+    \item Create new project.
+    \item Upload texts.
+    \item Select from predefined grammar sets.
+    \item Create new grammar sets.
+    \item Extract stylistic and linguistic features.
+    \item Statistical analysis.
+    \item Highlight the extracted features.
+    \item Modify analysis results.
+    \item Login
+    \item Logout
+    \item Signup
+\end{enumerate}
+\subsection{User Characteristics}
+The users will be linguistic professionals that can verify the output of the system, and are able to evaluate and verify the results of the analysis.
+\subsection{User Problem Statement}
+The main problem the system is facing is the time consuming labour involved in extracting those linguistic features and their analysis.
+\subsection{User Objectives}
+\begin{itemize}
+    \item Identify features of the text.
+    \item Modify the analysis results.
+    \item Identify the disputed text's author.
+    \item Create custom grammar for new features.
+\end{itemize}
+
+\section{Functional Requirements}
+\begin{center}
+    \begin{table}[H]
+        \caption{Create New Project}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Create New Project                                                                                  \\ \hline
+            Description                          & The user will create a new project that will host the documents of the same context to be analysed. \\ \hline
+            Criticality                          & This requirement is the opening point of the system, so the system cannot work without it.          \\ \hline
+            Technical issues                     & None.                                                                                               \\ \hline
+            Risks                                & None.                                                                                               \\ \hline
+            Dependencies with other requirements & None.                                                                                               \\ \hline
+            Precondition                         & Starting state.                                                                                     \\ \hline
+            Post-Condition                       & Awaiting documents to be uploaded.                                                                  \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+% Upload Texts
+\begin{center}
+    \begin{table}[H]
+        \caption{Upload Texts}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Upload Texts                                                                                                                                                                                \\ \hline
+            Description                          & The user will upload a collection of texts with each group of texts put in a separate folder with the label of the folder being the name of the author, and the disputed text if available. \\ \hline
+            Criticality                          & This requirement is the opening point of the project, so the system cannot work without it.                                                                                                 \\ \hline
+            Technical issues                     & Detecting the user uploaded the texts in the proper format.                                                                                                                                 \\ \hline
+            Risks                                & None.                                                                                                                                                                                       \\ \hline
+            Dependencies with other requirements & 'Create New Project'                                                                                                                                                                        \\ \hline
+            Precondition                         & A new project is created.                                                                                                                                                                   \\ \hline
+            Post-Condition                       & Awaiting the features to be explored.                                                                                                                                                       \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Select from predefined grammar sets}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Select from predefined grammar sets                                               \\ \hline
+            Description                          & The user will select a number of grammar sets that the text will be analysed for. \\ \hline
+            Criticality                          & System can't advance without it.                                                  \\ \hline
+            Technical issues                     & None.                                                                             \\ \hline
+            Risks                                & None.                                                                             \\ \hline
+            Dependencies with other requirements & None.                                                                             \\ \hline
+            Precondition                         & Texts have been uploaded.                                                         \\ \hline
+            Post-Condition                       & Awaiting analysis results.                                                        \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Create new grammar sets}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Create new grammar sets                                                                                                                                                               \\ \hline
+            Description                          & The user will be presented with an interface that will allow them to define their own grammar to apply on the corpus. The generated grammar will also be saved to the user's account. \\ \hline
+            Criticality                          & Optional.                                                                                                                                                                             \\ \hline
+            Technical issues                     & Ensuring that the grammar is of proper and valid format.                                                                                                                              \\ \hline
+            Risks                                & None.                                                                                                                                                                                 \\ \hline
+            Dependencies with other requirements & None.                                                                                                                                                                                 \\ \hline
+            Precondition                         & Grammar sets have been selected.                                                                                                                                                      \\ \hline
+            Post-Condition                       & Awaiting analysis of the corpus.                                                                                                                                                      \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Extract stylistic and linguistic features}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Extract stylistic and linguistic features                                                                 \\ \hline
+            Description                          & The system will receive the user's input and proceed to make the required analysis and return the result. \\ \hline
+            Criticality                          & Critical, system can't function without it.                                                               \\ \hline
+            Technical issues                     & None.                                                                                                     \\ \hline
+            Risks                                & None.                                                                                                     \\ \hline
+            Dependencies with other requirements & 'Create New Project', and 'Upload texts', 'Select from predefined grammar sets'                           \\ \hline
+            Precondition                         & Grammar is selected.                                                                                      \\ \hline
+            Post-Condition                       & Feature extraction is complete and returned to the user.                                                  \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Statistical analysis}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Statistical analysis.                                                                          \\ \hline
+            Description                          & The system will apply statistical analysis to the extracted features received from the parser. \\ \hline
+            Criticality                          & Critical, system can't function without it.                                                    \\ \hline
+            Technical issues                     & None.                                                                                          \\ \hline
+            Risks                                & None.                                                                                          \\ \hline
+            Dependencies with other requirements & 'Extract stylistic and linguistic features'                                                    \\ \hline
+            Precondition                         & Features are extracted.                                                                        \\ \hline
+            Post-Condition                       & Statistical analysis is applied and ready for modification.                                    \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Highlight the extracted features}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Highlight the extracted features.                                                                                                     \\ \hline
+            Description                          & The system will highlight the extracted features in the workspace section of the project and offer methods of editing of the results. \\ \hline
+            Criticality                          & Not critical.                                                                                                                         \\ \hline
+            Technical issues                     & None.                                                                                                                                 \\ \hline
+            Risks                                & None.                                                                                                                                 \\ \hline
+            Dependencies with other requirements & 'Extract stylistic and linguistic features'                                                                                           \\ \hline
+            Precondition                         & Features are extracted.                                                                                                               \\ \hline
+            Post-Condition                       & System awaiting features modification.                                                                                                \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Modify analysis results}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Modify analysis results.                                                                               \\ \hline
+            Description                          & The user can hover over a word in the workspace (highlighted or not) and edit its feature association. \\ \hline
+            Criticality                          & Not critical.                                                                                          \\ \hline
+            Technical issues                     & None.                                                                                                  \\ \hline
+            Risks                                & None.                                                                                                  \\ \hline
+            Dependencies with other requirements & 'Highlight extracted features'                                                                         \\ \hline
+            Precondition                         & Features are highlighted in the workspace.                                                             \\ \hline
+            Post-Condition                       & Modifications are applied to the workspace and the statistical analysis.                               \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Login}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Login.                                               \\ \hline
+            Description                          & User is logged in to system using their credentials. \\ \hline
+            Criticality                          & Critical.                                            \\ \hline
+            Technical issues                     & None.                                                \\ \hline
+            Risks                                & None.                                                \\ \hline
+            Dependencies with other requirements & None.                                                \\ \hline
+            Precondition                         & User has no access to the system.                    \\ \hline
+            Post-Condition                       & User is greeted with the home screen.                \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Logout}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Logout.                                                            \\ \hline
+            Description                          & User is logged out of the system and is greeted with the homepage. \\ \hline
+            Criticality                          & Critical.                                                          \\ \hline
+            Technical issues                     & None.                                                              \\ \hline
+            Risks                                & None.                                                              \\ \hline
+            Dependencies with other requirements & None.                                                              \\ \hline
+            Precondition                         & User has access to the system.                                     \\ \hline
+            Post-Condition                       & User is greeted with the Login screen.                             \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\begin{center}
+    \begin{table}[H]
+        \caption{Sign-up}
+        \begin{tabularx}{\textwidth} {
+                | >{\raggedright\arraybackslash\hsize=.5\hsize\linewidth=\hsize}X
+                | >{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X |}
+            \hline
+            Function Name                        & Sign-up.                                                                    \\ \hline
+            Description                          & User creates a new account using their credentials.                         \\ \hline
+            Criticality                          & Critical.                                                                   \\ \hline
+            Technical issues                     & None.                                                                       \\ \hline
+            Risks                                & None.                                                                       \\ \hline
+            Dependencies with other requirements & None.                                                                       \\ \hline
+            Precondition                         & User has no account registered in the system.                               \\ \hline
+            Post-Condition                       & User account is registered and they are greeted with the system's homepage. \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{center}
+
+\section{Interface Requirements}
+\subsection{User Interfaces}
+\subsubsection {GUI}
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/Screen 1.png}
+    \caption{Screen 1}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/Screen 2.png}
+    \caption{Screen 2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/Screen 3.png}
+    \caption{Screen 3}
+\end{figure}
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/Screen 4.png}
+    \caption{Screen 4}
+\end{figure}
+
+\section{Design Constraints}
+No constraints provided.
+
+\section{Other non-functional attributes}
+\subsection {Security}
+The system will use JWT (JSON Web Token) for user authentication.
+\subsection {Reliability}
+The system will be deployed as web services on AWS which offers a 99.99\% reliability assurance.
+\subsection {Maintainability}
+The system will be utilizing the micro-services architecture ensuring smaller and more maintainable code.
+\subsection {Portability}
+The system will be web based, so it is absolutely portable.
+\subsection {Extensibility}
+The system is using the micro-services architecture, so it is easily extensible.
+\subsection {Re-usability}
+The system is using the micro-service architecture, so any bit of code can be reused.
+
+\section{Operational Scenarios}
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/usecase.png}
+    \caption{Use case Diagram}
+\end{figure}
+
+\section{Preliminary Schedule Adjusted}
+\begin{figure}[H]
+    \includegraphics[width=15cm]{Images/gantt.png}
+    \caption{Gantt Chart}
+\end{figure}
+
+\end{document}

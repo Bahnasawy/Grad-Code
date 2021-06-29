@@ -1,0 +1,28 @@
+@startuml gantt
+ganttscale weekly
+Project starts the 1st of January 2021
+scale 2
+
+<style>
+task {
+    FontSize 8
+}
+</style>
+
+-- Analysis --
+[Create Grammar Format] lasts 21 days
+then [Feature Count and Statistical Analysis] lasts 14 days
+-- Database --
+then [Users] lasts 7 days
+then [Grammar] lasts 7 days
+then [Projects] lasts 7 days
+-- Storage --
+then [Documents] lasts 7 days
+-- Interface --
+then [Workspace] lasts 7 days
+then [Grammar Editor] lasts 14 days
+then [Project Manager / Creator] lasts 7 days
+-- Storage --
+then [Analysis Reports] lasts 7 days
+
+@enduml
