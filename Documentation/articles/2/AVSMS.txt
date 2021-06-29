@@ -1,0 +1,15 @@
+Problem:
+	Authorship attribution of the Enron email dataset containing 87 authors.
+
+Solution:
+	Using stylometric techniques through the analysis of linguistic styles and writing characteristics.
+
+Algorithm Name:
+	Supervised learning and n-gram analysis.
+
+Main Findings:
+	The experiment yielded an EER(Estimated Error Rate) of 14.35%
+
+Pros and Cons:
+	Pros: It has achieved a better EER than other research papers with a lesser character count.
+	Cons: It still falls short when investigating shorter and unrelated texts like twitter messages.

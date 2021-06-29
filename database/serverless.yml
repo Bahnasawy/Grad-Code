@@ -1,0 +1,47 @@
+org: bahnasawy
+service: serverless-postgraphile
+
+frameworkVersion: ">=1.24.0"
+app: daf-sales-app
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-central-1
+  stage: dev
+  lambdaHashingVersion: "20201221"
+  timeout: 30
+  memorySize: 3008
+  versionFunctions: true
+  vpc:
+    securityGroupIds:
+      - sg-0292142711f697a7f
+    subnetIds:
+      - subnet-09eda62c382d1f9f1
+  apiGateway:
+    shouldStartNameWithService: true
+
+plugins:
+  - serverless-express
+  - serverless-hooks-plugin
+  - serverless-prune-plugin
+  - serverless-dotenv-plugin
+
+functions:
+  graphql_handler:
+    handler: handler.handler
+    events:
+      - http:
+          path: /
+          method: POST
+
+custom:
+  hooks:
+    before:package:createDeploymentArtifacts:
+      - sh hooks/create-introspection-cache.sh
+
+  prune:
+    automatic: true
+    number: 3

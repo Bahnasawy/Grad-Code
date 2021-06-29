@@ -1,0 +1,15 @@
+Problem:
+	Authorship attribution with a limited number of characters like twitter's 140 characters limit causing a scarcity of information, but having and enormous overall corpus.
+
+Solution:
+	Computing very low-level lexical statistics
+
+Algorithm Name:
+	PMSVM (Power Mean Support Vector Machine)
+
+Main finidings:
+	They were able to achieve an accuracy of 70% for 50 authors.
+
+Pros and Cons:
+	Pro: The proposed method can be used for search-space reduction or helping to assemble more conventional evidence.
+	Con: It is still an incomplete process and researchers still nee to look at the graphical structure of the social network to be able to make a more accurate decision.

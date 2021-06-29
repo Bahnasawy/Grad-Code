@@ -1,0 +1,12 @@
+image: node:14.16.0-alpine3.13
+
+pipelines:
+  branches:
+    main:
+      - step:
+          caches:
+            - node
+          script:
+            - yarn
+            - yarn global add serverless postgraphile postgraphile-plugin-connection-filter postgraphile-plugin-many-create-update-delete @graphile-contrib/pg-simplify-inflector
+            - serverless deploy --stage dev

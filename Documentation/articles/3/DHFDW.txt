@@ -1,0 +1,12 @@
+Problem:
+	Detecting deception and hoaxes in writing style to mask the author's true identity, and distinguishing the true documents from the fraudulent.
+
+Solution:
+	Using stylometry, machine learning, and a large feature-set.
+
+Algorithm Name:
+	Information Gain Ratio
+
+Pros and Cons:
+	Pros: The feature set used was content-independant, and can be used to detect texts with different subjects.
+	Cons: The results on the EBG(Extended-Brennan-Greenstadt) were much better than the imitation contest participants, which could mean that it might be difficult to optimize for a real world scenario.
