@@ -14,6 +14,6 @@ export const focusRing = tw`focus:outline-none focus:ring-2 focus:ring-teal-600 
 export const NewEntity = styled.button`
 	${animation}
 	${focusRing}
-	${tw`px-4 py-1 text-base font-bold bg-teal-600 border border-transparent rounded text-gray-50`}
+	${tw`flex items-center px-4 py-1 text-base font-bold bg-teal-600 border border-transparent rounded text-gray-50`}
 	${tw`focus:border-gray-50 hover:bg-teal-700 focus:bg-teal-800`}
 `;

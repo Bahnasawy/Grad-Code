@@ -1,1 +1,1 @@
-export const endpointUrl = "/api/graphql";
+export const endpointUrl = "http://localhost:8000/";

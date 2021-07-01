@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { NewEntity } from "styles/globals";
 import tw from "twin.macro";
 import { AiOutlineLoading, AiOutlineCheck } from "react-icons/ai";
@@ -11,12 +12,22 @@ export default function Project() {
 	//ANCHOR Data Fetch
 	const router = useRouter();
 	const { id } = router.query;
-	const project = useQuery<any>("project", () => getProject(id));
+	const project = useQuery<Project>("project", () => getProject(id), { enabled: false });
 
 	//ANCHOR States
 	const [author, setAuthor] = useState("");
 	const [text, setText] = useState("");
 	const [feature, setFeature] = useState("");
+
+	//ANCHOR Effects
+	useEffect(() => {
+		id && project.refetch();
+	}, [id]);
+
+	useEffect(() => {
+		if (project.data) {
+		}
+	}, [project.data]);
 
 	return (
 		<div>
@@ -29,7 +40,7 @@ export default function Project() {
 							// v-model="project.name"
 						/>
 						<NewEntity>
-							Save
+							{project.data?.name}
 							<AiOutlineCheck tw="w-6" />
 						</NewEntity>
 					</div>
@@ -37,45 +48,50 @@ export default function Project() {
 					<div tw="flex flex-row items-center justify-between">
 						<div tw="flex flex-row gap-4">
 							<div>
-								<label htmlFor="author">Author:</label>
+								<label htmlFor="author" tw="mr-1">
+									Author:
+								</label>
 								<select name="author" onChange={(event) => setAuthor(event.target.value)} tw="w-48 px-2 py-1 rounded">
-									{Object.keys(project.data).map((textsAuthor) => (
-										<option key={textsAuthor} value={textsAuthor}>
-											{textsAuthor}
-										</option>
-									))}
+									{project.data &&
+										Object.keys(project.data.data).map((textsAuthor) => (
+											<option key={textsAuthor} value={textsAuthor} selected={textsAuthor == author}>
+												{textsAuthor}
+											</option>
+										))}
 								</select>
 							</div>
-							{author && (
-								<div>
-									<label htmlFor="text">Text:</label>
-									<Select name="text" onChange={(event) => setText(event.target.value)} tw="w-48 px-2 py-1 rounded">
-										{Object.keys(project.data[author]).map((textsText) => (
+							<div>
+								<label htmlFor="text" tw="mr-1">
+									Text:
+								</label>
+								<Select name="text" onChange={(event) => setText(event.target.value)} tw="w-48 px-2 py-1 rounded">
+									{project.data &&
+										Object.keys(project.data.data[author]).map((textsText) => (
 											<option key={textsText} value={textsText}>
 												{textsText}
 											</option>
 										))}
-									</Select>
-								</div>
-							)}
+								</Select>
+							</div>
 						</div>
-						{text && (
-							<div>
-								<label htmlFor="freature">Feature:</label>
-								<Select name="feature" onChange={(event) => setFeature(event.target.value)}>
-									{Object.keys(project.data[author][text]).map((item) => (
+						<div>
+							<label htmlFor="freature" tw="mr-1">
+								Feature:
+							</label>
+							<Select name="feature" onChange={(event) => setFeature(event.target.value)}>
+								{project.data &&
+									Object.keys(project.data.data[author][text]).map((item) => (
 										<option key={item} value={item}>
 											{item}
 										</option>
 									))}
-								</Select>
-							</div>
-						)}
+							</Select>
+						</div>
 					</div>
 					{/* Text */}
-					{feature && (
-						<div tw="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900  max-h-192">
-							{project.data[author][text][feature].map((item: any, index: number) => (
+					<div tw="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900  max-h-192">
+						{project.data &&
+							project.data.data[author][text][feature].map((item: any, index: number) => (
 								<div
 									key={item[0][0].join(" ") + index.toString() + Math.random().toString()}
 									tw="flex flex-row flex-wrap items-center gap-4 pt-8"
@@ -88,8 +104,7 @@ export default function Project() {
 									))}
 								</div>
 							))}
-						</div>
-					)}
+					</div>
 				</div>
 			) : (
 				<div tw="flex items-center justify-center">
