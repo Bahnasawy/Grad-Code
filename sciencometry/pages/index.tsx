@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/link-passhref */
 import tw from "twin.macro";
-
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { animation, Button } from "styles/globals";
@@ -18,7 +17,7 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 
 	//ANCHOR Data Fetching
-	const login = useQuery("login", () => username && password && loginQuery(router, username, password), {
+	const login = useQuery("login", () => loginQuery(router, username, password), {
 		enabled: false,
 	});
 
