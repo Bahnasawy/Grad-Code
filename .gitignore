@@ -1,1 +1,21 @@
 .DS_Store
+documentation/Thesis/Dissertation.aux
+documentation/Thesis/Dissertation.bbl
+documentation/Thesis/Dissertation.blg
+documentation/Thesis/Dissertation.fdb_latexmk
+documentation/Thesis/Dissertation.fls
+documentation/Thesis/Dissertation.idx
+documentation/Thesis/Dissertation.ilg
+documentation/Thesis/Dissertation.ind
+documentation/Thesis/Dissertation.lof
+documentation/Thesis/Dissertation.log
+documentation/Thesis/Dissertation.lot
+documentation/Thesis/Dissertation.toc
+documentation/Thesis/Dissertation.synctex.gz
+documentation/Software Design Document/SDD.fdb_latexmk
+documentation/Software Design Document/SDD.fls
+documentation/Software Design Document/SDD.log
+documentation/Software Design Document/SDD.synctex.gz
+parser/__pycache__/marked.cpython-38.pyc
+parser/__pycache__/parse.cpython-38.pyc
+parser/__pycache__/unmarked.cpython-38.pyc

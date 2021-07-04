@@ -22,8 +22,8 @@ export default function Projects() {
 	return (
 		<div>
 			<div tw="flex flex-row items-center justify-between">
-				<p tw="text-4xl font-bold">Projects</p>
-				<NewEntity>New Project</NewEntity>
+				<p tw="text-2xl font-bold">Projects</p>
+				<NewEntity onClick={() => router.push("/projects/newProject")}>New Project</NewEntity>
 			</div>
 			<div tw="flex flex-col gap-8">
 				{/* Search */}

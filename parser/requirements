@@ -1,0 +1,15 @@
+click==7.1.2
+colorama==0.4.4
+Flask==1.1.2
+Flask-Cors==3.0.10
+itsdangerous==1.1.0
+Jinja2==2.11.3
+joblib==1.0.0
+MarkupSafe==1.1.1
+nltk==3.5
+numpy==1.21.0
+pretty-errors==1.2.19
+regex==2020.11.13
+six==1.15.0
+tqdm==4.54.1
+Werkzeug==1.0.1

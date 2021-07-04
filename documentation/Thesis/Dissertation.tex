@@ -1,0 +1,94 @@
+\documentclass[12pt,final]{tsukuthesis}
+\usepackage{graphicx}
+
+\usepackage[numbers, square, comma, sort&compress]{natbib}
+\def\newblock{\hskip .11em plus .33em minus .07em}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{IEEEtrantools}
+\usepackage{setspace} 
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{datatool}
+\setlength\parindent{0.25in}
+
+\pagestyle{fancy}
+
+\newcommand{\sortitem}[1]{%
+    \DTLnewrow{list}% Create a new entry
+    \DTLnewdbentry{list}{description}{#1}% Add entry as description
+}
+\newenvironment{sortedlist}{%
+    \DTLifdbexists{list}{\DTLcleardb{list}}{\DTLnewdb{list}}% Create new/discard old list
+}{
+    \DTLsort{description}{list}% Sort list
+    \begin{itemize}%
+        \DTLforeach*{list}{\theDesc=description}{\item \theDesc}% Print each item
+    \end{itemize}%
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername \ \thechapter.\ #1}{}}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RO]{\thepage}
+\fancyfoot[CO]{}
+
+\bibliographystyle{IEEEtran} 
+\setlength{\headheight}{15.2pt}
+\clubpenalty=10000
+\widowpenalty=10000
+\newcommand{\parag}{\par \vspace{10pt}}
+\newcommand\tabcaption{\def\@captype{table}\caption}
+\setcounter{secnumdepth}{4}
+
+\title{Forensics Linguistics and Authorship Attribution using stylometry}
+
+\author{Yousef Mohamed Abdullah - 184367}
+\degree{Bachelor of Computer Science}
+\school{Faculty of Computer Science}
+\university{October University for Modern Sciences and Arts (MSA)}
+\degreeyear{July 2021}
+\advisor{Dr. Wael Gomaa}
+\prevdegrees{} 
+\field{SE Programme}
+\country{Egypt}
+\makeindex
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\maketitle
+
+\cleardoublepage
+
+\input{Abstract}
+\input{Acknowledgments}
+
+\pagenumbering{arabic}
+\tableofcontents
+\listoftables
+\listoffigures
+\input{Chapter_1}
+\input{Chapter_2}
+\input{Chapter_3}
+\input{Chapter_4}
+\input{Chapter_5}
+\input{Chapter_6}
+\input{Chapter_7}
+
+\appendix
+% \chapter{Collected materials from ....}
+\input{Appendices}
+
+\clearpage
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{dissertationbib}
+
+\end{document}

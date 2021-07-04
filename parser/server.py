@@ -1,6 +1,6 @@
 from flask import Flask
-from unmarked import unmarkedGrammar, unmarkedFollower
-from marked import markedGrammar, markedFollower
+from unmarked import unmarkedGrammar
+from marked import markedGrammar
 from parse import parseText
 from flask_cors import CORS
 import pretty_errors
@@ -13,15 +13,12 @@ features = [
     {
         "name": "Unmarked Theme",
         "grammar": unmarkedGrammar,
-        "follower": unmarkedFollower
     },
     {
         "name": "Marked Theme",
         "grammar": markedGrammar,
-        "follower": markedFollower
     }
 ]
-followers = [unmarkedFollower, markedFollower]
 
 @app.route('/')
 def hello_world():

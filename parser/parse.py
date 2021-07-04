@@ -45,10 +45,8 @@ def parseText(text, features):
             sents.append(temp)
         featuresTags[features[idx]["name"]] = sents
 
-    giveBack = {
+    return {
         "Obama": {
             "Text 1": featuresTags,
         } 
     }
-
-    return giveBack

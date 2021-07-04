@@ -6,3 +6,7 @@ type Project = {
 };
 
 type Projects = Array<Project>;
+
+type Inflated = {
+	[author: string]: { [text: string]: string };
+};
