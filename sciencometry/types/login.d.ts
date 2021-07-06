@@ -1,1 +1,1 @@
-type LoginResponse = { data: { users: { nodes: Array<{ id: number }> } } };
+type LoginResponse = { users: { nodes: Array<{ id: number }> } };

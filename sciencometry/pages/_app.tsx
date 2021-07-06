@@ -6,12 +6,16 @@ import tw from "twin.macro";
 import { animation } from "styles/globals";
 import { Router, useRouter } from "next/router";
 import { navigate } from "styles/_app";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { NextComponentType, NextPageContext } from "next";
 import styled from "styled-components";
 import { RecoilRoot } from "recoil";
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from "@apollo/client";
+import { endpointUrl } from "providers/globals";
 
-const queryClient = new QueryClient();
+const client = new ApolloClient({
+	uri: endpointUrl,
+	cache: new InMemoryCache(),
+});
 
 function switchRoute(Component: NextComponentType<NextPageContext, any, {}>, pageProps: any, router: Router) {
 	switch (router.route) {
@@ -29,7 +33,7 @@ function switchRoute(Component: NextComponentType<NextPageContext, any, {}>, pag
 function MyApp({ Component, pageProps, router }: AppProps) {
 	return (
 		<RecoilRoot>
-			<QueryClientProvider client={queryClient}>{switchRoute(Component, pageProps, router)}</QueryClientProvider>
+			<ApolloProvider client={client}>{switchRoute(Component, pageProps, router)}</ApolloProvider>
 		</RecoilRoot>
 	);
 }
@@ -43,7 +47,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children, page }) => {
 
 	return (
 		<div tw="flex h-screen">
-			<div tw="flex flex-col flex-2 items-center py-12 px-4 gap-4 bg-teal-600">
+			<div tw="flex flex-col flex-1 items-center py-12 px-4 gap-4 bg-teal-600">
 				<p tw="text-gray-50 font-semibold text-2xl">Stylometry</p>
 				<PageButton onClick={navigate({ page, router, path: "/home" })} active={page.includes("/home")}>
 					Home
@@ -60,8 +64,8 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children, page }) => {
 	);
 };
 
-const PageButton = styled.button`
-	${animation}
-	${tw`w-full py-1 rounded text-gray-50 hover:bg-gray-100 hover:text-teal-600`}
-	${({ active }: { active: boolean }) => active && tw`text-teal-600 bg-gray-50`}
-`;
+const PageButton = styled.button(({ active }: { active: boolean }) => [
+	animation,
+	tw`w-full py-1 rounded text-gray-50 hover:bg-gray-100 hover:text-teal-600`,
+	active && tw`text-teal-600 bg-gray-50`,
+]);

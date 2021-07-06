@@ -1,14 +1,26 @@
 import JSZip from "jszip";
+import { grammarQuery, toSet } from "providers/projects";
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { animation } from "styles/globals";
+import { Upload } from "styles/project";
 import tw from "twin.macro";
+import { VscLoading } from "react-icons/vsc";
+import { useQuery } from "@apollo/client";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "atoms";
 
 export default function NewProjects() {
+	//ANCHOR States
 	const [file, setFile] = useState<File>();
-	let jszip = useRef<JSZip>(new JSZip());
 	const [entries, setEntries] = useState<JSZip>();
 	const [inflated, setInflated] = useState<Inflated>();
+	const [loading, setLoading] = useState<boolean>(false);
+
+	//ANCHOR JSZip
+	let jszip = useRef<JSZip>(new JSZip());
+
+	//ANCHOR Queries
+	const id = useRecoilValue(userAtom);
+	const grammar = useQuery(grammarQuery, { skip: true });
 
 	useEffect(() => {
 		if (file) {
@@ -17,6 +29,10 @@ export default function NewProjects() {
 			});
 		}
 	}, [file]);
+
+	useEffect(() => {
+		id && grammar.refetch();
+	}, [id, grammar]);
 
 	useEffect(() => {
 		if (entries?.files) {
@@ -30,7 +46,8 @@ export default function NewProjects() {
 					out.name = out.name.replace(rootName, "");
 					return out;
 				});
-			setInflated(toSet(temp));
+			toSet(temp).then((value) => setInflated(value));
+			setLoading(false);
 		}
 	}, [entries]);
 
@@ -38,6 +55,11 @@ export default function NewProjects() {
 		<div tw="flex flex-col gap-4">
 			<div tw="flex flex-row items-center justify-between">
 				<p tw="text-2xl font-bold">New Project</p>
+				{loading && (
+					<p tw="flex items-center gap-2">
+						<VscLoading tw="animate-spin" /> Loading
+					</p>
+				)}
 			</div>
 
 			<div tw="flex items-center gap-4">
@@ -49,6 +71,7 @@ export default function NewProjects() {
 						onChange={(e) => {
 							jszip.current = new JSZip();
 							setFile(e.target.files?.[0]);
+							setLoading(true);
 						}}
 					/>
 					<span tw="absolute">Upload</span>
@@ -57,42 +80,26 @@ export default function NewProjects() {
 			</div>
 
 			<div tw="flex flex-col gap-2">
-				<p tw="text-xl font-semibold">Files:</p>
-				<div tw="flex flex-col h-96 overflow-y-auto">
-					{inflated &&
-						Object.keys(inflated).map((author) => (
-							<div key={author} tw="flex flex-col gap-2">
-								<p tw="text-xl">{author}</p>
-								<div tw="ml-4 flex flex-col gap-1">
-									{Object.keys(inflated[author]).map((text) => (
-										<p key={`${author}/${text}`}>{text}</p>
-									))}
+				{inflated && (
+					<div>
+						<p tw="text-2xl font-semibold underline">Files:</p>
+						<div tw="flex flex-col h-96 overflow-y-auto gap-2">
+							{Object.keys(inflated).map((author) => (
+								<div key={author} tw="flex flex-col">
+									<p tw="text-xl font-medium underline">{author}</p>
+									<div tw="pl-4 flex flex-col gap-1 border-l border-gray-500">
+										{Object.keys(inflated[author]).map((text) => (
+											<p key={`${author}/${text}`} tw="text-sm">
+												{text}
+											</p>
+										))}
+									</div>
 								</div>
-							</div>
-						))}
-				</div>
+							))}
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
 }
-
-const Upload = styled.label(() => [
-	animation,
-	tw`relative flex items-center justify-center w-64 font-bold bg-gray-200 border rounded-sm cursor-pointer h-9`,
-	tw`hover:bg-gray-300`,
-]);
-
-const toSet = (items: JSZip.JSZipObject[]): Inflated => {
-	const out: Inflated = {};
-	items.forEach((item) => {
-		const name = item.name.split("/")[0];
-		out[name] = {};
-	});
-	items.forEach((item) => {
-		const name = item.name.split("/");
-		item.async("string").then((value) => {
-			out[name[0]][name[1]] = value;
-		});
-	});
-	return out;
-};

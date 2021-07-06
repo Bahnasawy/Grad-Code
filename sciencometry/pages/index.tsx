@@ -5,9 +5,11 @@ import { useRouter } from "next/router";
 import { animation, Button } from "styles/globals";
 import { loginQuery } from "providers/login";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { hash } from "bcryptjs";
+import { useRecoilState } from "recoil";
+import { userAtom } from "atoms";
+import { useQuery } from "@apollo/client";
 
 export default function Login() {
 	const router = useRouter();
@@ -15,11 +17,16 @@ export default function Login() {
 	//ANCHOR States
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [user, setUser] = useRecoilState(userAtom);
 
 	//ANCHOR Data Fetching
-	const login = useQuery("login", () => loginQuery(router, username, password), {
-		enabled: false,
-	});
+	const login = useQuery<LoginResponse>(loginQuery, { skip: true, variables: { username, password } });
+
+	useEffect(() => {
+		if (!login.error && !login.loading && login.called) {
+			login.data?.users.nodes[0].id && setUser(login.data?.users.nodes[0].id);
+		}
+	}, [login, setUser]);
 
 	return (
 		<div tw="flex flex-col items-center justify-center h-screen gap-1 bg-gray-700">

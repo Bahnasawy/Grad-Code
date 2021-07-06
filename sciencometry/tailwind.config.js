@@ -20,9 +20,6 @@ module.exports = {
 					"100%": { transform: "rotate(360deg)" },
 				},
 			},
-			animation: {
-				"spin-slow": "spin-slow 2s ease-in-out infinite",
-			},
 		},
 	},
 	variants: {
