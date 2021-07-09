@@ -52,44 +52,44 @@ export default function NewProjects() {
 	}, [entries]);
 
 	return (
-		<div tw="flex flex-col gap-4">
-			<div tw="flex flex-row items-center justify-between">
-				<p tw="text-2xl font-bold">New Project</p>
+		<div className="flex flex-col gap-4">
+			<div className="flex flex-row items-center justify-between">
+				<p className="text-2xl font-bold">New Project</p>
 				{loading && (
-					<p tw="flex items-center gap-2">
-						<VscLoading tw="animate-spin" /> Loading
+					<p className="flex items-center gap-2">
+						<VscLoading className="animate-spin" /> Loading
 					</p>
 				)}
 			</div>
 
-			<div tw="flex items-center gap-4">
+			<div className="flex items-center gap-4">
 				<Upload>
 					<input
 						type="file"
 						id="file"
-						tw="absolute opacity-0 w-full h-full"
+						className="absolute opacity-0 w-full h-full"
 						onChange={(e) => {
 							jszip.current = new JSZip();
 							setFile(e.target.files?.[0]);
 							setLoading(true);
 						}}
 					/>
-					<span tw="absolute">Upload</span>
+					<span className="absolute">Upload</span>
 				</Upload>
 				<p>{file?.name}</p>
 			</div>
 
-			<div tw="flex flex-col gap-2">
+			<div className="flex flex-col gap-2">
 				{inflated && (
 					<div>
-						<p tw="text-2xl font-semibold underline">Files:</p>
-						<div tw="flex flex-col h-96 overflow-y-auto gap-2">
+						<p className="text-2xl font-semibold underline">Files:</p>
+						<div className="flex flex-col h-96 overflow-y-auto gap-2">
 							{Object.keys(inflated).map((author) => (
-								<div key={author} tw="flex flex-col">
-									<p tw="text-xl font-medium underline">{author}</p>
-									<div tw="pl-4 flex flex-col gap-1 border-l border-gray-500">
+								<div key={author} className="flex flex-col">
+									<p className="text-xl font-medium underline">{author}</p>
+									<div className="pl-4 flex flex-col gap-1 border-l border-gray-500">
 										{Object.keys(inflated[author]).map((text) => (
-											<p key={`${author}/${text}`} tw="text-sm">
+											<p key={`${author}/${text}`} className="text-sm">
 												{text}
 											</p>
 										))}

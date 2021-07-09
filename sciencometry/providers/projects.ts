@@ -2,17 +2,19 @@ import { gql } from "@apollo/client";
 import JSZip from "jszip";
 
 export const projectsQuery = gql`
-	query projects {
-		nodes {
-			id
-			name
-			description
-			userByCreatedBy {
+	query ($id: Int) {
+		projects(filter: { id: { equalTo: $id } }) {
+			nodes {
 				id
+				name
+				description
+				userByCreatedBy {
+					id
+				}
+				createdAt
 			}
-			createdAt
+			totalCount
 		}
-		totalCount
 	}
 `;
 
@@ -31,16 +33,3 @@ export const toSet = async (items: JSZip.JSZipObject[]): Promise<Inflated> => {
 
 	return out;
 };
-
-export const grammarQuery = gql`
-	query ($id: Int) {
-		grammars(filter: { createdBy: { equalTo: $id } }) {
-			nodes {
-				id
-				name
-				string
-			}
-			totalCount
-		}
-	}
-`;

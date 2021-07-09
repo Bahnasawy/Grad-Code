@@ -32,26 +32,30 @@ export default function Project() {
 	return (
 		<div>
 			{project != null ? (
-				<div tw="flex flex-col gap-8" v-if="project != null">
-					<div tw="flex flex-row items-center justify-between">
+				<div className="flex flex-col gap-8" v-if="project != null">
+					<div className="flex flex-row items-center justify-between">
 						<input
 							type="text"
-							tw="px-1 text-4xl font-bold"
+							className="px-1 text-4xl font-bold"
 							// v-model="project.name"
 						/>
 						<NewEntity>
 							{project.data?.name}
-							<AiOutlineCheck tw="w-6" />
+							<AiOutlineCheck className="w-6" />
 						</NewEntity>
 					</div>
 					{/* Text Selector */}
-					<div tw="flex flex-row items-center justify-between">
-						<div tw="flex flex-row gap-4">
+					<div className="flex flex-row items-center justify-between">
+						<div className="flex flex-row gap-4">
 							<div>
-								<label htmlFor="author" tw="mr-1">
+								<label htmlFor="author" className="mr-1">
 									Author:
 								</label>
-								<select name="author" onChange={(event) => setAuthor(event.target.value)} tw="w-48 px-2 py-1 rounded">
+								<select
+									name="author"
+									onChange={(event) => setAuthor(event.target.value)}
+									className="w-48 px-2 py-1 rounded"
+								>
 									{project.data &&
 										Object.keys(project.data.data).map((textsAuthor) => (
 											<option key={textsAuthor} value={textsAuthor} selected={textsAuthor == author}>
@@ -61,10 +65,14 @@ export default function Project() {
 								</select>
 							</div>
 							<div>
-								<label htmlFor="text" tw="mr-1">
+								<label htmlFor="text" className="mr-1">
 									Text:
 								</label>
-								<Select name="text" onChange={(event) => setText(event.target.value)} tw="w-48 px-2 py-1 rounded">
+								<Select
+									name="text"
+									onChange={(event) => setText(event.target.value)}
+									className="w-48 px-2 py-1 rounded"
+								>
 									{project.data &&
 										Object.keys(project.data.data[author]).map((textsText) => (
 											<option key={textsText} value={textsText}>
@@ -75,7 +83,7 @@ export default function Project() {
 							</div>
 						</div>
 						<div>
-							<label htmlFor="freature" tw="mr-1">
+							<label htmlFor="freature" className="mr-1">
 								Feature:
 							</label>
 							<Select name="feature" onChange={(event) => setFeature(event.target.value)}>
@@ -89,16 +97,16 @@ export default function Project() {
 						</div>
 					</div>
 					{/* Text */}
-					<div tw="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900  max-h-192">
+					<div className="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900  max-h-192">
 						{project.data &&
 							project.data.data[author][text][feature].map((item: any, index: number) => (
 								<div
 									key={item[0][0].join(" ") + index.toString() + Math.random().toString()}
-									tw="flex flex-row flex-wrap items-center gap-4 pt-8"
+									className="flex flex-row flex-wrap items-center gap-4 pt-8"
 								>
 									{item.map((word: any, index: number) => (
 										<Word active={word[2]} key={word[0].join(" ") + index.toString() + Math.random().toString()}>
-											<p tw="text-lg font-bold">{word[0].join(" ")}</p>
+											<p className="text-lg font-bold">{word[0].join(" ")}</p>
 											<p>{word[1]}</p>
 										</Word>
 									))}
@@ -107,8 +115,8 @@ export default function Project() {
 					</div>
 				</div>
 			) : (
-				<div tw="flex items-center justify-center">
-					<AiOutlineLoading tw="w-32 h-32 animate-spin-slow" />
+				<div className="flex items-center justify-center">
+					<AiOutlineLoading className="w-32 h-32 animate-spin" />
 				</div>
 			)}
 		</div>

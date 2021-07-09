@@ -1,6 +1,4 @@
-import { getProjects } from "providers/projects";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import { animation, focusRing, NewEntity } from "styles/globals";
@@ -8,44 +6,48 @@ import tw from "twin.macro";
 
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useRouter } from "next/router";
-import { navigate } from "styles/_app";
+import { useQuery } from "@apollo/client";
+import { projectsQuery } from "providers/projects";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "atoms";
 
 export default function Projects() {
 	const router = useRouter();
 
-	//ANCHOR Data Fetching
-	const projects = useQuery<Array<any>>("projects", getProjects);
-
 	//ANCHOR States
 	const [search, setSearch] = useState("");
+	const user = useRecoilValue(userAtom);
+
+	//ANCHOR Data Fetching
+	const projects = useQuery<Projects>(projectsQuery, { variables: { id: 1 } });
 
 	return (
 		<div>
-			<div tw="flex flex-row items-center justify-between">
-				<p tw="text-2xl font-bold">Projects</p>
+			<div className="flex flex-row items-center justify-between">
+				<p className="text-2xl font-bold">Projects</p>
 				<NewEntity onClick={() => router.push("/projects/newProject")}>New Project</NewEntity>
 			</div>
-			<div tw="flex flex-col gap-8">
-				{/* Search */}
-				<div tw="flex flex-row gap-2 mt-4">
+			<div className="flex flex-col gap-8">
+				{/* ANCHOR Search */}
+				<div className="flex flex-row gap-2 mt-4">
 					<Input placeholder="Search Projects" onChange={(event) => setSearch(event.target.value)} />
-					<BiSearchAlt2 tw="w-4 text-gray-600" />
+					<BiSearchAlt2 className="w-4 text-gray-600" />
 				</div>
 
-				{/* Projects */}
-				<div tw="flex flex-col">
-					{/* Headers */}
-					<div tw="flex flex-row justify-between text-lg font-bold text-left">
-						<div tw="flex flex-row">
-							<p tw="w-32">Name</p>
-							<p tw="w-32">Description</p>
+				{/* ANCHOR Projects */}
+				<div className="flex flex-col">
+					{/* ANCHOR Headers */}
+					<div className="flex flex-row justify-between text-lg font-bold text-left">
+						<div className="flex flex-row">
+							<p className="w-32">Name</p>
+							<p className="w-32">Description</p>
 						</div>
 						<p>Created At</p>
 					</div>
 					<hr />
-					{/* Data */}
-					<div tw="flex flex-col gap-1">
-						{projects.data &&
+					{/* ANCHOR Data */}
+					<div className="flex flex-col gap-1">
+						{/* {projects.data &&
 							projects.data
 								.filter((item) => item.name.toLowerCase().includes(search))
 								.map((project: any) => (
@@ -54,13 +56,13 @@ export default function Projects() {
 										// "$router.push('/projects/' + project.id)"
 										onClick={() => navigate({ page: router.route, path: `/projects/${project.id}`, router })}
 									>
-										<div tw="flex flex-row">
-											<p tw="w-32">{project.name}</p>
-											<p tw="w-32">{project.description}</p>
+										<div className="flex flex-row">
+											<p className="w-32">{project.name}</p>
+											<p className="w-32">{project.description}</p>
 										</div>
 										<p>{project.createdAt}</p>
 									</Project>
-								))}
+								))} */}
 					</div>
 				</div>
 			</div>

@@ -5,54 +5,57 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { navigate } from "styles/_app";
-import { useQuery } from "react-query";
+import { useQuery } from "@apollo/client";
+import { grammarQuery } from "providers/grammar";
 
 export default function Grammar() {
 	const router = useRouter();
 
+	// const user =
+
 	//ANCHOR Data Fetching
-	const grammar = useQuery<Array<any>>("grammar");
+	const grammar = useQuery<Grammars>(grammarQuery, { variables: { id: 1 } });
 
 	// ANCHOR States
 	const [search, setSearch] = useState("");
 
 	return (
 		<div>
-			<div tw="flex flex-row items-center justify-between">
-				<p tw="text-4xl font-bold">Grammar</p>
+			<div className="flex flex-row items-center justify-between">
+				<p className="text-4xl font-bold">Grammar</p>
 				<NewEntity>New Grammar</NewEntity>
 			</div>
-			<div tw="flex flex-col gap-8">
-				{/* Search */}
-				<div tw="flex flex-row gap-2 mt-4">
+			<div className="flex flex-col gap-8">
+				{/* ANCHOR Search */}
+				<div className="flex flex-row gap-2 mt-4">
 					<Input placeholder="Search Grammar" onChange={(event) => setSearch(event.target.value)} />
-					<BiSearchAlt2 tw="w-4 text-gray-600" />
+					<BiSearchAlt2 className="w-4 text-gray-600" />
 				</div>
 
-				{/* Grammar  */}
-				<div tw="flex flex-col">
+				{/* ANCHOR Grammar  */}
+				<div className="flex flex-col">
 					{/* Headers */}
-					<div tw="flex flex-row justify-between text-lg font-bold text-left">
-						<div tw="flex flex-row">
-							<p tw="w-32">Title</p>
-							<p tw="w-32">Author</p>
+					<div className="flex flex-row justify-between text-lg font-bold text-left">
+						<div className="flex flex-row">
+							<p className="w-32">Title</p>
+							<p className="w-32">Author</p>
 						</div>
 						<p>Created At</p>
 					</div>
 					<hr />
-					{/* Data */}
+					{/* ANCHOR Data */}
 					{grammar.data && (
-						<div tw="flex flex-col gap-1">
-							{grammar.data
-								.filter((item: any) => item.title.toLowerCase().includes(search))
-								.map(({ title, author, createdAt }: any) => (
+						<div className="flex flex-col gap-1">
+							{grammar.data.grammars.nodes
+								.filter((item) => item.name.toLowerCase().includes(search))
+								.map(({ name, author, createdAt }) => (
 									<Button
-										key={title + author}
-										onClick={navigate({ page: router.route, path: `/grammar/${title}`, router })}
+										key={name + author}
+										onClick={navigate({ page: router.route, path: `/grammar/${name}`, router })}
 									>
-										<div tw="flex flex-row">
-											<p tw="w-32">{title}</p>
-											<p tw="w-32">{author.username}</p>
+										<div className="flex flex-row">
+											<p className="w-32">{name}</p>
+											<p className="w-32">{author.username}</p>
 										</div>
 										<p>{createdAt}</p>
 									</Button>

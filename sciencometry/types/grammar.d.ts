@@ -1,7 +1,9 @@
 type Grammar = {
-	title: string;
-	author: string;
+	id: string;
+	name: string;
+	author: { username: string };
 	createdAt: string;
+	string: string;
 };
 
-type GrammarList = Array<Grammar>;
+type Grammars = { grammars: { nodes: Array<Grammar>; totalCount: number } };

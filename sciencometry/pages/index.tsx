@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/link-passhref */
 import tw from "twin.macro";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,8 +11,6 @@ import { userAtom } from "atoms";
 import { useQuery } from "@apollo/client";
 
 export default function Login() {
-	const router = useRouter();
-
 	//ANCHOR States
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -29,21 +26,21 @@ export default function Login() {
 	}, [login, setUser]);
 
 	return (
-		<div tw="flex flex-col items-center justify-center h-screen gap-1 bg-gray-700">
-			<div tw="flex flex-col gap-1 py-24 bg-gray-100 rounded px-14">
-				<p tw="mb-4 text-3xl font-bold">Stylometry</p>
+		<div className="flex flex-col items-center justify-center h-screen gap-1 bg-gray-700">
+			<div className="flex flex-col gap-1 py-24 bg-gray-100 rounded px-14">
+				<p className="mb-4 text-3xl font-bold">Stylometry</p>
 				<Input type="text" placeholder="Username" onChange={(event) => setUsername(event.target.value)} />
 				<Input
 					type="password"
 					placeholder="Password"
 					onChange={(event) => hash(event.target.value, 10, (err, hash) => setPassword(hash))}
 				/>
-				<Button tw="w-full mt-2" onClick={() => login.refetch()}>
+				<Button className="w-full mt-2" onClick={() => login.refetch()}>
 					Login
 				</Button>
-				<p tw="mt-4 text-xs font-light text-gray-900">
+				<p className="mt-4 text-xs font-light text-gray-900">
 					Dont have an account?{" "}
-					<Link href="/register">
+					<Link href="/register" passHref>
 						<Register>Create a new one!</Register>
 					</Link>
 				</p>

@@ -8,12 +8,12 @@ import tw from "twin.macro";
 export default function Recent({ createdAt, description, name, id }: RecentType) {
 	return (
 		<Container>
-			<div tw="flex flex-col items-start w-full p-4">
-				<p tw="text-xl font-bold text-gray-900">{name}</p>
-				<p tw="text-gray-700 truncate">{description}</p>
+			<div className="flex flex-col items-start w-full p-4">
+				<p className="text-xl font-bold text-gray-900">{name}</p>
+				<p className="text-gray-700 truncate">{description}</p>
 			</div>
-			<div tw="flex flex-col items-start w-full px-4 py-2 bg-gray-100 rounded-b-lg ">
-				<p tw="text-gray-700">{new Date(createdAt).toUTCString()}</p>
+			<div className="flex flex-col items-start w-full px-4 py-2 bg-gray-100 rounded-b-lg ">
+				<p className="text-gray-700">{new Date(createdAt).toUTCString()}</p>
 			</div>
 		</Container>
 	);

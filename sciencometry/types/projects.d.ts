@@ -5,7 +5,7 @@ type Project = {
 	data: { [author: string]: { [text: string]: { [feature: string]: Array<any> } } };
 };
 
-type Projects = Array<Project>;
+type Projects = { projects: { nodes: Array<Project> } };
 
 type Inflated = {
 	[author: string]: { [text: string]: string };
