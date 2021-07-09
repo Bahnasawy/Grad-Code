@@ -9,18 +9,18 @@ import { useRecoilValue } from "recoil";
 import { userAtom } from "atoms";
 
 export default function NewProjects() {
-	//ANCHOR States
+	//SECTION States
 	const [file, setFile] = useState<File>();
 	const [entries, setEntries] = useState<JSZip>();
 	const [inflated, setInflated] = useState<Inflated>();
 	const [loading, setLoading] = useState<boolean>(false);
 
-	//ANCHOR JSZip
+	//SECTION JSZip
 	let jszip = useRef<JSZip>(new JSZip());
 
-	//ANCHOR Queries
+	//SECTION Queries
 	const id = useRecoilValue(userAtom);
-	const grammar = useQuery(grammarQuery, { skip: true });
+	const grammar = useQuery(grammarQuery, { variables: { id: 1 } });
 
 	useEffect(() => {
 		if (file) {
@@ -67,7 +67,7 @@ export default function NewProjects() {
 					<input
 						type="file"
 						id="file"
-						className="absolute opacity-0 w-full h-full"
+						className="absolute w-full h-full opacity-0"
 						onChange={(e) => {
 							jszip.current = new JSZip();
 							setFile(e.target.files?.[0]);
@@ -83,11 +83,11 @@ export default function NewProjects() {
 				{inflated && (
 					<div>
 						<p className="text-2xl font-semibold underline">Files:</p>
-						<div className="flex flex-col h-96 overflow-y-auto gap-2">
+						<div className="flex flex-col gap-2 overflow-y-auto h-96">
 							{Object.keys(inflated).map((author) => (
 								<div key={author} className="flex flex-col">
 									<p className="text-xl font-medium underline">{author}</p>
-									<div className="pl-4 flex flex-col gap-1 border-l border-gray-500">
+									<div className="flex flex-col gap-1 pl-4 border-l border-gray-500">
 										{Object.keys(inflated[author]).map((text) => (
 											<p key={`${author}/${text}`} className="text-sm">
 												{text}

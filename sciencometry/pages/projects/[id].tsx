@@ -1,48 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { NewEntity } from "styles/globals";
+import { GreenButton } from "styles/globals";
 import tw from "twin.macro";
 import { AiOutlineLoading, AiOutlineCheck } from "react-icons/ai";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import { getProject } from "providers/project";
 import { useRouter } from "next/router";
+import { useQuery } from "@apollo/client";
+import { projectsQuery } from "providers/projects";
 
 export default function Project() {
-	//ANCHOR Data Fetch
+	//SECTION Data Fetch
 	const router = useRouter();
 	const { id } = router.query;
-	const project = useQuery<Project>("project", () => getProject(id), { enabled: false });
+	const project = useQuery<Project>(projectsQuery, { variables: { id: 1 } });
 
-	//ANCHOR States
+	//SECTION States
 	const [author, setAuthor] = useState("");
 	const [text, setText] = useState("");
 	const [feature, setFeature] = useState("");
 
-	//ANCHOR Effects
-	useEffect(() => {
-		id && project.refetch();
-	}, [id]);
+	//SECTION Effects
+	// useEffect(() => {
+	// 	id && project.refetch();
+	// }, [id]);
 
-	useEffect(() => {
-		if (project.data) {
-		}
-	}, [project.data]);
+	// useEffect(() => {
+	// 	if (project.data) {
+	// 	}
+	// }, [project.data]);
 
 	return (
 		<div>
 			{project != null ? (
 				<div className="flex flex-col gap-8" v-if="project != null">
 					<div className="flex flex-row items-center justify-between">
-						<input
-							type="text"
-							className="px-1 text-4xl font-bold"
-							// v-model="project.name"
-						/>
-						<NewEntity>
+						<input type="text" className="px-1 text-4xl font-bold" />
+						<GreenButton>
 							{project.data?.name}
 							<AiOutlineCheck className="w-6" />
-						</NewEntity>
+						</GreenButton>
 					</div>
 					{/* Text Selector */}
 					<div className="flex flex-row items-center justify-between">
@@ -97,7 +93,7 @@ export default function Project() {
 						</div>
 					</div>
 					{/* Text */}
-					<div className="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900  max-h-192">
+					<div className="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900 max-h-192">
 						{project.data &&
 							project.data.data[author][text][feature].map((item: any, index: number) => (
 								<div

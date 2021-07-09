@@ -33,3 +33,20 @@ export const toSet = async (items: JSZip.JSZipObject[]): Promise<Inflated> => {
 
 	return out;
 };
+
+export const grammarQuery = gql`
+	query ($id: Int) {
+		grammars(filter: { createdBy: { equalTo: $id } }) {
+			nodes {
+				id
+				name
+				string
+				createdAt
+				author: userByCreatedBy {
+					username
+				}
+			}
+			totalCount
+		}
+	}
+`;

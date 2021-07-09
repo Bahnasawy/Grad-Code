@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { animation, focusRing, NewEntity } from "styles/globals";
+import { animation, focusRing, GreenButton } from "styles/globals";
 import tw from "twin.macro";
 
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -14,29 +14,29 @@ import { userAtom } from "atoms";
 export default function Projects() {
 	const router = useRouter();
 
-	//ANCHOR States
+	//SECTION States
 	const [search, setSearch] = useState("");
 	const user = useRecoilValue(userAtom);
 
-	//ANCHOR Data Fetching
+	//SECTION Data Fetching
 	const projects = useQuery<Projects>(projectsQuery, { variables: { id: 1 } });
 
 	return (
 		<div>
 			<div className="flex flex-row items-center justify-between">
 				<p className="text-2xl font-bold">Projects</p>
-				<NewEntity onClick={() => router.push("/projects/newProject")}>New Project</NewEntity>
+				<GreenButton onClick={() => router.push("/projects/newProject")}>New Project</GreenButton>
 			</div>
 			<div className="flex flex-col gap-8">
-				{/* ANCHOR Search */}
+				{/* SECTION Search */}
 				<div className="flex flex-row gap-2 mt-4">
 					<Input placeholder="Search Projects" onChange={(event) => setSearch(event.target.value)} />
 					<BiSearchAlt2 className="w-4 text-gray-600" />
 				</div>
 
-				{/* ANCHOR Projects */}
+				{/* SECTION Projects */}
 				<div className="flex flex-col">
-					{/* ANCHOR Headers */}
+					{/* SECTION Headers */}
 					<div className="flex flex-row justify-between text-lg font-bold text-left">
 						<div className="flex flex-row">
 							<p className="w-32">Name</p>
@@ -45,16 +45,16 @@ export default function Projects() {
 						<p>Created At</p>
 					</div>
 					<hr />
-					{/* ANCHOR Data */}
+					{/* SECTION Data */}
 					<div className="flex flex-col gap-1">
-						{/* {projects.data &&
-							projects.data
+						{projects.data &&
+							projects.data.projects.nodes
 								.filter((item) => item.name.toLowerCase().includes(search))
 								.map((project: any) => (
 									<Project
 										key={project.name}
 										// "$router.push('/projects/' + project.id)"
-										onClick={() => navigate({ page: router.route, path: `/projects/${project.id}`, router })}
+										onClick={() => router.push(`/projects/${project.id}`)}
 									>
 										<div className="flex flex-row">
 											<p className="w-32">{project.name}</p>
@@ -62,7 +62,7 @@ export default function Projects() {
 										</div>
 										<p>{project.createdAt}</p>
 									</Project>
-								))} */}
+								))}
 					</div>
 				</div>
 			</div>

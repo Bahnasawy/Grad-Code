@@ -11,12 +11,12 @@ import { userAtom } from "atoms";
 import { useQuery } from "@apollo/client";
 
 export default function Login() {
-	//ANCHOR States
+	//SECTION States
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [user, setUser] = useRecoilState(userAtom);
 
-	//ANCHOR Data Fetching
+	//SECTION Data Fetching
 	const login = useQuery<LoginResponse>(loginQuery, { skip: true, variables: { username, password } });
 
 	useEffect(() => {
