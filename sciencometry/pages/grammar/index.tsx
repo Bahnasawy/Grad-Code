@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { navigate } from "styles/_app";
 import { useQuery } from "@apollo/client";
-import { grammarQuery } from "providers/projects";
+import { grammarsQuery } from "providers/projects";
 
 export default function Grammar() {
 	const router = useRouter();
@@ -14,7 +14,7 @@ export default function Grammar() {
 	// const user =
 
 	//SECTION Data Fetching
-	const grammar = useQuery<Grammars>(grammarQuery, { variables: { id: 1 } });
+	const grammars = useQuery<Grammars>(grammarsQuery, { variables: { id: 1 } });
 
 	// SECTION States
 	const [search, setSearch] = useState("");
@@ -44,15 +44,12 @@ export default function Grammar() {
 					</div>
 					<hr />
 					{/* SECTION Data */}
-					{grammar.data && (
+					{grammars.data && (
 						<div className="flex flex-col gap-1">
-							{grammar.data.grammars.nodes
+							{grammars.data.grammars.nodes
 								.filter((item) => item.name.toLowerCase().includes(search))
-								.map(({ name, author, createdAt }) => (
-									<Button
-										key={name + author}
-										onClick={navigate({ page: router.route, path: `/grammar/${name}`, router })}
-									>
+								.map(({ name, author, createdAt, id }) => (
+									<Button key={name + author} onClick={() => router.push(`/grammar/${id}`)}>
 										<div className="flex flex-row">
 											<p className="w-32">{name}</p>
 											<p className="w-32">{author.username}</p>

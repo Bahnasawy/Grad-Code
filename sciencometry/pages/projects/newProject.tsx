@@ -2,7 +2,6 @@ import JSZip from "jszip";
 import { grammarQuery, toSet } from "providers/projects";
 import React, { useEffect, useRef, useState } from "react";
 import { Upload } from "styles/project";
-import tw from "twin.macro";
 import { VscLoading } from "react-icons/vsc";
 import { useQuery } from "@apollo/client";
 import { useRecoilValue } from "recoil";
@@ -29,10 +28,6 @@ export default function NewProjects() {
 			});
 		}
 	}, [file]);
-
-	useEffect(() => {
-		id && grammar.refetch();
-	}, [id, grammar]);
 
 	useEffect(() => {
 		if (entries?.files) {
