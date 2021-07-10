@@ -1,30 +1,13 @@
 \chapter{Results and Evaluation}
 
-%Each object has a normal functionality rather than interaction, the user has to decide when he wants to use object for interaction and when he wants to use it naturally. 
+\section{Results}
+\subsection{Parser}
+The parser produces accurate results with a degree of certainty that matches the tokenizer accuracy. It only fails if given an incorrect Regex pattern, but it is an unavoidable limitation so no action was taken to fix it.
 
+\subsection{Analysis}
+The system can successfully measure the probability of similarity between authors and the disputed text, but the accuracy requires rigorous testing since it needs a significantly large data set. The tests will be conducted by collecting authors from similar genres and separating them into classes, taking a test text as a control, then they will be passed through the system and the outputs will be logged and studied to calculate the system's accuracy.
 
-\section{General Rules}
-In this section you should describe to what extent you achieved your goals.
-You should describe how you demonstrated that the system works as intended (or not, as the
-case may be). Include comprehensible summaries of the results of all critical tests that were
-carried out. You might not have had the time to carry out any full rigorous tests – you may
-not even got as far as producing a testable system. However, you should try to indicate how
-confident you are about whatever you have produced, and also suggest what tests would be
-required to gain further confidence.
-This is also the place to describe the reasoning behind the tests to evaluate your results, what
-tests to execute, what the results show and why to execute these tests. It may also contain a
-discussion of how you are designing your experiments to verify the hypothesis of a more
-scientifically oriented project. E.g., describe how you compare the performance of your
-algorithm to other algorithms to indicate better performance and why this is a sound
-approach. Then summarize the results of the tests or experiments.
+\subsection{User interface}
+The user interface achieves its purpose, but is in need of clarifications, and user experience improvements since at this stage it requires exploration and/or trial and error to operate.
 
-You must also critically evaluate your results in the light of these tests, describing its
-strengths and weaknesses. Ideas for improving it can be carried over into the Future Work
-section. Remember: no project is perfect, and even a project that has failed to deliver what
-was intended can achieve a good pass mark, if it is clear that you have learned from the
-mistakes and difficulties.
-This section also gives you an opportunity to present a critical appraisal of the project as a
-whole. This could include, for example, whether the methodology you have chosen and the
-programming language used were appropriate
-
-
+Sections of the interface were tested for validity by using invalid data formats or removing them entirely. The only failed test is the corpus loader as it needs to be able to reject poorly formatted corpus.

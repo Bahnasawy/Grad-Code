@@ -1,15 +1,14 @@
 \chapter{Specification - (SRS)}
 
-\section{General Guide Lines}
-
 \section{Introduction}
 \subsection{Purpose of this document}
 The purpose of this document is to define the requirements to be met by the system to be classified as successful and functional.
+
 \subsection{Scope of this document}
 The system is wholly engineered and developed by me, with the supervision of Dr. Wael Gomaa. The users are the professors of MSA University's Faculty of Languages.
 
 \subsection{Overview}
-The system will take a collection of texts, formatted and organized by author, to be analyzed by the system through a set of stylometric and linguistic features, and will return the extracted features embedded in the text with a statistical report of the analysis. The system will also require a selection of predefined grammar sets or new grammar sets defined by the user.
+The system will take a collection of texts, organized by author, to be analyzed by the system through a set of stylometric and linguistic features, and will return the extracted features embedded in the text with a statistical report of the analysis. The system will also require a selection of predefined grammar sets defined by the user and/or the community.
 
 \subsection{Business Context}
 The MSA University Faculty of Languages is the organization supporting and contributing to the project.
@@ -255,22 +254,32 @@ The main problem the system is facing is the time consuming labor involved in ex
 \subsection{User Interfaces}
 \subsubsection {GUI}
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 1.png}
-    \caption{Screen 1}
+    \includegraphics[width=15cm]{images/Login.png}
+    \caption{Login}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 2.png}
-    \caption{Screen 2}
+    \includegraphics[width=15cm]{images/Home.png}
+    \caption{Home}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 3.png}
-    \caption{Screen 3}
+    \includegraphics[width=15cm]{images/Projects.png}
+    \caption{Projects}
 \end{figure}
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 4.png}
-    \caption{Screen 4}
+    \includegraphics[width=15cm]{images/Project.png}
+    \caption{Project}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{images/Grammars.png}
+    \caption{Grammars}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{images/Grammar.png}
+    \caption{Grammar}
 \end{figure}
 
 \section{Design Constraints}
@@ -280,15 +289,15 @@ No constraints provided.
 \subsection {Security}
 The system will use JWT (JSON Web Token) for user authentication.
 \subsection {Reliability}
-The system will be deployed as web services on AWS which offers a 99.99\
+The system will be deployed as web services on AWS which offers a 99.99\% availability guarantee.
 \subsection {Maintainability}
 The system will be utilizing the micro-services architecture ensuring smaller and more maintainable code.
 \subsection {Portability}
-The system will be web based, so it is absolutely portable.
+The system will be web based, so it is completely portable.
 \subsection {Extensible}
 The system is using the micro-services architecture, so it is easily extensible.
 \subsection {Re-usability}
-The system is using the micro-service architecture, so any bit of code can be reused.
+The system is using the micro-service architecture, and utilizing the functional programming paradigm, so any bit of code can be reused.
 
 \section{Operational Scenarios}
 \begin{figure}[H]

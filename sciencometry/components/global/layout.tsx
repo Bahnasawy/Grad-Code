@@ -10,7 +10,7 @@ const MainLayout: FC = ({ children }) => {
 	return router.asPath != "/" ? (
 		<div className="flex h-screen">
 			<div className="flex flex-col items-center flex-1 gap-4 px-4 py-12 bg-teal-600">
-				<p className="text-2xl font-semibold text-gray-50">Stylometry</p>
+				{/* <p className="text-2xl font-semibold text-gray-50">Stylometry</p> */}
 				<PageButton onClick={() => router.push("/home")} active={router.asPath.includes("/home")}>
 					Home
 				</PageButton>

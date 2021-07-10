@@ -12,12 +12,16 @@ export default function Project() {
 	//SECTION Data Fetch
 	const router = useRouter();
 	const { id } = router.query;
-	const project = useQuery<Project>(projectsQuery, { variables: { id: 1 } });
+	const project = useQuery<Projects>(projectsQuery, { variables: { id: 1 } });
 
 	//SECTION States
 	const [author, setAuthor] = useState("");
 	const [text, setText] = useState("");
 	const [feature, setFeature] = useState("");
+
+	useEffect(() => {
+		console.log(project.data);
+	});
 
 	//SECTION Effects
 	// useEffect(() => {
@@ -31,14 +35,14 @@ export default function Project() {
 
 	return (
 		<div>
-			{project != null ? (
-				<div className="flex flex-col gap-8" v-if="project != null">
+			{project.data?.projects.nodes[0] != null ? (
+				<div className="flex flex-col gap-8">
 					<div className="flex flex-row items-center justify-between">
-						<input type="text" className="px-1 text-4xl font-bold" />
-						<GreenButton>
-							{project.data?.name}
+						<p className="text-2xl font-semibold">{project.data?.projects.nodes[0]?.name}</p>
+						{/* <GreenButton>
+							{project.data?.projects.nodes[0]?.name}
 							<AiOutlineCheck className="w-6" />
-						</GreenButton>
+						</GreenButton> */}
 					</div>
 					{/* Text Selector */}
 					<div className="flex flex-row items-center justify-between">
@@ -52,8 +56,9 @@ export default function Project() {
 									onChange={(event) => setAuthor(event.target.value)}
 									className="w-48 px-2 py-1 rounded"
 								>
-									{project.data &&
-										Object.keys(project.data.data).map((textsAuthor) => (
+									<option value=""></option>
+									{project.data?.projects.nodes[0] &&
+										Object.keys(project.data?.projects.nodes[0].data).map((textsAuthor) => (
 											<option key={textsAuthor} value={textsAuthor} selected={textsAuthor == author}>
 												{textsAuthor}
 											</option>
@@ -69,8 +74,11 @@ export default function Project() {
 									onChange={(event) => setText(event.target.value)}
 									className="w-48 px-2 py-1 rounded"
 								>
-									{project.data &&
-										Object.keys(project.data.data[author]).map((textsText) => (
+									<option value=""></option>
+
+									{project.data?.projects.nodes[0] &&
+										author &&
+										Object.keys(project.data?.projects.nodes[0].data[author]).map((textsText) => (
 											<option key={textsText} value={textsText}>
 												{textsText}
 											</option>
@@ -83,8 +91,12 @@ export default function Project() {
 								Feature:
 							</label>
 							<Select name="feature" onChange={(event) => setFeature(event.target.value)}>
-								{project.data &&
-									Object.keys(project.data.data[author][text]).map((item) => (
+								<option value=""></option>
+
+								{project.data?.projects.nodes[0] &&
+									author &&
+									text &&
+									Object.keys(project.data?.projects.nodes[0].data[author][text]).map((item) => (
 										<option key={item} value={item}>
 											{item}
 										</option>
@@ -94,8 +106,11 @@ export default function Project() {
 					</div>
 					{/* Text */}
 					<div className="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900 max-h-192">
-						{project.data &&
-							project.data.data[author][text][feature].map((item: any, index: number) => (
+						{project.data?.projects.nodes[0] &&
+							author &&
+							text &&
+							feature &&
+							project.data?.projects.nodes[0].data[author][text][feature].map((item: any, index: number) => (
 								<div
 									key={item[0][0].join(" ") + index.toString() + Math.random().toString()}
 									className="flex flex-row flex-wrap items-center gap-4 pt-8"

@@ -1,27 +1,90 @@
 \chapter{Implementation}
 
-\section{General Guidelines}
+\section{Database}
+The database is accessed through a serverless function running a library called PostGraphile. The library introspects the database and creates a graphQL API to communicate with the database.
 
-\textbf{Students can choose between}
+\subsection{Code}
+\begin{verbatim}
+const express = require("serverless-express/express");
+const { postgraphile } = require("postgraphile");
+var cors = require("cors");
 
-\begin{enumerate}
-    \item Illustrate your implementation parts
-    \item  (Application oriented) “Deliverable” from Selected Approach
-    \item (Comparing Algorithm) Experiment Design
-\end{enumerate}
+const { SCHEMA, PG_DEFAULT_ROLE, POSTGRES_CONNECTION } = process.env;
 
-The Implementation section is similar to the Specification and Design section in that it
-describes the system, but it does so at a finer level of detail, down to the code level. This section is about the realization of the concepts and ideas developed earlier. It can also describe any problems that may have arisen during implementation and how you dealt with them.
-Do not attempt to describe all the code in the system, and do not include large pieces of code in this section. Complete source code should be provided separately. Instead pick out and describe just the pieces of code which, for example:
+const app = express();
+app.use(cors());
+app.use(
+        postgraphile("postgres://postgres:@localhost:5432/grad", "public", {
+                dynamicJson: true,
+                graphqlRoute: "/",
+                extendedErrors: ["hint", "detail", "errcode"],
+                legacyRelations: "omit",
+                pgDefaultRole: PG_DEFAULT_ROLE,
+                subscriptions: true,
+                setofFunctionsContainNulls: false,
+                ignoreRBAC: false,
+                appendPlugins: [
+                        require("@graphile-contrib/pg-simplify-inflector"),
+                        require("postgraphile-plugin-connection-filter"),
+                        require("postgraphile-plugin-many-create-update-delete").default,
+                ],
+                retryOnInitFail: true,
+                graphileBuildOptions: {
+                        connectionFilterRelations: true,
+                },
+                graphiql: true,
+                graphiqlRoute: "/graphiql",
+        })
+);
 
-\begin{itemize}
-    \item Are especially critical to the operation of the system;
-    \item You feel might be of particular interest to the reader for some reason;
-    \item Illustrate a non-standard or innovative way of implementing an algorithm, data structure, etc..
-    \item You should also mention any unforeseen problems you encountered when implementing the system and how and to what extent you overcame them. Common problems are:
-    \item  Difficulties involving existing software, because of, e.g.,  its complexity, lack of documentation;  lack of suitable supporting software;
-\end{itemize}
-A seemingly disproportionate amount of project time can be taken up in dealing with such
-problems. The Implementation section gives you the opportunity to show where that time has
-gone
+app.listen(8000, () => console.log(`Server running on port 8000`));
+\end{verbatim}
 
+\section{Server / Parser}
+The parser server is meant to parse the text according to the selected grammar and returns the result in JSON format.
+
+\subsection{Problems}
+The system uses the nltk tokenizer, which has an extremely high success rate, but with large enough texts defects start to show and those errors may cause the parser have false results, positive and/or negative.
+
+\subsection{Code}
+\begin{verbatim}
+    tokens = nltk.tokenize.word_tokenize(text)
+
+    sentences = []
+    temp = []
+    for token in tokens:
+        if token == "." or token == "?" or token == "!":
+            sentences.append(temp)
+            temp = []
+        else:
+            temp.append(token)
+
+    pos = nltk.pos_tag_sents(sentences)
+
+
+    # Parsing
+    results = []
+    for feature in features:
+        temp = []
+        for sent in pos:
+            temp.append(nltk.RegexpParser(feature["grammar"]).parse(sent))
+        results.append(temp)
+
+
+    # Clean Up and Separation of features results
+    featuresTags = {}
+    for idx, feature in enumerate(features):
+        sents = []
+        for sent in results[idx]:
+            temp = []
+            for tag in sent:
+                if type(tag) is tree.Tree:
+                    leafArr = []
+                    for leaf in tag.leaves():
+                        leafArr.append(leaf[0])
+                    temp.append([leafArr ,tag.label(), True])
+                else:
+                    temp.append([[tag[0]],tag[1], False])
+            sents.append(temp)
+        featuresTags[features[idx]["name"]] = sents
+\end{verbatim}

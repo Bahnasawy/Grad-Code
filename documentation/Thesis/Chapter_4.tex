@@ -21,7 +21,7 @@ The project is intended to create a system for parsing and analyzing text for th
     \item Bulk analysis.
     \item Features management.
     \item Analysis modification.
-    \item Statistical and machine learning methods for authorship attribution.
+    \item Statistical and methods for authorship attribution.
 \end{itemize}
 
 \subsection{Overview}
@@ -31,8 +31,8 @@ The system is meant to be used by linguistic professionals to extract features f
 The system will receive the corpus from the user in the form of a compressed file, and the features required for extraction, which will then be processed for the required output and analyzed for a disputed text if necessary.
 
 \section{System Architecture}
-\subsection{Architectural Design}
 
+\subsection{Architectural Design}
 \begin{figure}[tbh]
     \centering
     \includegraphics[width=0.7\linewidth]{images/System Overview.png}
@@ -54,7 +54,7 @@ The system will receive the corpus from the user in the form of a compressed fil
 
 
 \subsection{Design Rationale}
-The principle behind the architecture used is separation of concerns, the main components of the system beside the user interface and the database are in the server and the controller. The server and the controller are two different entities and are deployed independently from each other. The reason for the separation is that they use different technologies with different architectures and different deployment needs. The server hosts the parser and the machine learning model of the system, which run on python and have a very specific task that may be modified but no extra features may be added. The controller on the other hand handles all the logistics of the system, by managing the users, grammar and projects by providing a graphQL API that is completely expandable.
+The principle behind the architecture used is separation of concerns, the main component of the system besides the user interface and the database is the server. The server, user interface, and database are completely separate entities that are deployed independently. The reason for the separation is that they use different technologies with different architectures and different deployment needs. The server hosts the text parser, which runs on python and has a very specific task that may be modified but no extra features may be added. The database exposes a graphQL API to query and manipulate the user data. The interface is the coordinator of all the processes of the system.
 
 
 \section{Data Design}
@@ -121,28 +121,38 @@ The principle behind the architecture used is separation of concerns, the main c
 \begin{itemize}
     \item Creating new grammar: The user will open the grammar tab and press on the 'New Feature' button, they will then be redirected to a page where they are presented with a tool that allows them to write the grammar which will be converted into regex for the parser.
     \item Editing grammar: On the grammar tab, the user will be presented with a list of all the features they created, which they can either delete or edit. If the user chooses to edit, they will be redirected to the grammar creation tool page, but with the existing feature characteristics already set for them to change.
-    \item Creating a project: The user will be presented with a wizard involving a number of steps, they will first upload the corpus in a specified format which will be demonstrated on the wizard, then they will choose the needed features from the grammar they created, then all the data will be sent to the server and the user will be redirected to the workspace page where they can see the result of the analysis.
+    \item Creating a project: The user will be presented with a wizard involving a number of steps, they will first upload the corpus in a specified format which will be demonstrated on the wizard, then they will choose the needed features from the grammar they created, or use one from the community, then all the data will be sent to the server and the user will be redirected to the workspace page where they can see the result of the analysis.
     \item Editing the analysis: The user can hover on any word in the workspace, set as a feature or not, and change its feature association as they please by selecting from the list of features they chose at the beginning of the project. The edit will also reflect on the statistical and the authorship attribution results accordingly.
 \end{itemize}
 
 \subsection {Screen Images}
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 1.png}
-    \caption{Screen 1}
+    \includegraphics[width=15cm]{images/Login.png}
+    \caption{Login}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 2.png}
-    \caption{Screen 2}
+    \includegraphics[width=15cm]{images/Home.png}
+    \caption{Home}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 3.png}
-    \caption{Screen 3}
+    \includegraphics[width=15cm]{images/Projects.png}
+    \caption{Projects}
 \end{figure}
 \begin{figure}[H]
-    \includegraphics[width=15cm]{images/Screen 4.png}
-    \caption{Screen 4}
+    \includegraphics[width=15cm]{images/Project.png}
+    \caption{Project}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{images/Grammars.png}
+    \caption{Grammars}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=15cm]{images/Grammar.png}
+    \caption{Grammar}
 \end{figure}
 
 
@@ -150,13 +160,13 @@ The principle behind the architecture used is separation of concerns, the main c
 \begin{center}
     \begin{tabular}{|c|c|}
         \hline
-        System Component & Functional Requirement \\
+        System Components & Functional Requirements \\
         \hline\hline
-        Grammar          & 3, 4                   \\
+        Grammar           & 3, 4                    \\
         \hline
-        Analysis         & 1, 2, 5, 6, 7, 8       \\
+        Analysis          & 1, 2, 5, 6, 7, 8        \\
         \hline
-        Authentication   & 9, 10, 11              \\
+        Authentication    & 9, 10, 11               \\
         \hline
     \end{tabular}
 \end{center}

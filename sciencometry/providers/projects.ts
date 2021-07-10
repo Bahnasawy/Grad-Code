@@ -12,6 +12,7 @@ export const projectsQuery = gql`
 					id
 				}
 				createdAt
+				data
 			}
 			totalCount
 		}
