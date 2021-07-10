@@ -48,7 +48,11 @@ export default function NewGrammar() {
 
 				{/* SECTION Grammar String */}
 				<div className="flex items-center gap-4">
-					<GrammarInput type="text" placeholder="Grammar String" onChange={(e) => setString(e.target.value)} />
+					<textarea
+						className="flex-1 p-2 border border-gray-400 rounded h-96"
+						placeholder="Grammar String"
+						onChange={(e) => setString(e.target.value)}
+					/>
 					<GreenButton onClick={() => parse(string, test)}>Parse</GreenButton>
 				</div>
 

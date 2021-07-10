@@ -33,11 +33,31 @@ export const updateGrammarMutation = gql`
 `;
 
 export const grammarQuery = gql`
+	query {
+		grammars {
+			nodes {
+				id
+				name
+				string
+				createdAt
+				author: userByCreatedBy {
+					username
+				}
+			}
+		}
+	}
+`;
+
+export const idGrammarQuery = gql`
 	query ($id: Int!) {
 		grammar(id: $id) {
 			id
-			string
 			name
+			string
+			createdAt
+			author: userByCreatedBy {
+				username
+			}
 		}
 	}
 `;

@@ -1,38 +1,30 @@
+import { useQuery } from "@apollo/client";
 import Recent from "components/home/Recent";
+import { homeQuery } from "providers/home";
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
 export default function Home() {
-	const [recentProjects, setRecentProjects] = useState<RecentsType>([
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test project", id: 1 },
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test project", id: 2 },
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test project", id: 3 },
-	]);
-
-	const [recentGrammar, setRecentGrammar] = useState<RecentsType>([
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test grammar", id: 1 },
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test grammar", id: 2 },
-		{ name: "Temp", createdAt: Date.now(), description: "This is a test grammar", id: 3 },
-	]);
+	const recent = useQuery<HomeResponse>(homeQuery, { variables: { id: 1 } });
 
 	return (
 		<Container>
 			<Part>
 				<Title>Recent Projects</Title>
 				<Recents>
-					{recentProjects.length &&
-						recentProjects.map(({ createdAt, description, name, id }) => (
-							<Recent key={id} createdAt={createdAt} description={description} name={name} id={id} />
+					{recent.data?.projects.nodes.length &&
+						recent.data?.projects.nodes.map(({ createdAt, description, name, id }) => (
+							<Recent key={id} createdAt={createdAt} description={description} name={name} id={id} project />
 						))}
 				</Recents>
 			</Part>
 			<Part>
 				<Title>Recent Grammar</Title>
 				<Recents>
-					{recentGrammar.length &&
-						recentGrammar.map(({ createdAt, description, name, id }) => (
-							<Recent key={id} createdAt={createdAt} description={description} name={name} id={id} />
+					{recent.data?.grammars.nodes.length &&
+						recent.data?.grammars.nodes.map(({ createdAt, name, id }) => (
+							<Recent key={id} createdAt={createdAt} description="" name={name} id={id} />
 						))}
 				</Recents>
 			</Part>

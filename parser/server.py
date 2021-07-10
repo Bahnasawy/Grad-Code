@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from unmarked import unmarkedGrammar
 from marked import markedGrammar
 from parse import parseText
@@ -7,22 +7,14 @@ import pretty_errors
 app = Flask(__name__)
 CORS(app)
 
-text = open("speech.txt", "r").read()
-
-features = [
-    {
-        "name": "Unmarked Theme",
-        "grammar": unmarkedGrammar,
-    },
-    {
-        "name": "Marked Theme",
-        "grammar": markedGrammar,
-    }
-]
-
-@app.route('/')
+@app.route('/', methods=["POST"])
 def hello_world():
-    return parseText(text, features)
+    response = {}
+    for author, texts in request.json['texts'].items():
+        response[author] = {}
+        for title, content in texts.items():
+            response[author][title] = parseText(content, request.json['grammar'])
+    return response
 
 app.run()
 

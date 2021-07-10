@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { animation, focusRing, GreenButton } from "styles/globals";
+import { animation, focusRing, GreenButton, Input } from "styles/globals";
 import tw from "twin.macro";
 
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -29,7 +29,7 @@ export default function Projects() {
 			</div>
 			<div className="flex flex-col gap-8">
 				{/* SECTION Search */}
-				<div className="flex flex-row gap-2 mt-4">
+				<div className="flex flex-row items-center gap-2 mt-4">
 					<Input placeholder="Search Projects" onChange={(event) => setSearch(event.target.value)} />
 					<BiSearchAlt2 className="w-4 text-gray-600" />
 				</div>
@@ -75,10 +75,4 @@ const Project = styled.button(() => [
 	focusRing,
 	tw`flex flex-row justify-between w-full text-left rounded-sm`,
 	tw`hover:bg-gray-200`,
-]);
-
-const Input = styled.input(() => [
-	animation,
-	tw`px-2 text-sm border border-gray-200 rounded shadow-xl `,
-	tw`focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent`,
 ]);

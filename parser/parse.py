@@ -24,7 +24,7 @@ def parseText(text, features):
     for feature in features:
         temp = []
         for sent in pos:
-            temp.append(nltk.RegexpParser(feature["grammar"]).parse(sent))
+            temp.append(nltk.RegexpParser(feature["string"]).parse(sent))
         results.append(temp)
 
 
@@ -45,8 +45,4 @@ def parseText(text, features):
             sents.append(temp)
         featuresTags[features[idx]["name"]] = sents
 
-    return {
-        "Obama": {
-            "Text 1": featuresTags,
-        } 
-    }
+    return featuresTags

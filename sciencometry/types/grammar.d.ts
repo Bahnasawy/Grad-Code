@@ -1,5 +1,5 @@
 type Grammar = {
-	id: string;
+	id: number;
 	name: string;
 	author: { username: string };
 	createdAt: string;

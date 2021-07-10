@@ -10,3 +10,5 @@ type Projects = { projects: { nodes: Array<Project> } };
 type Inflated = {
 	[author: string]: { [text: string]: string };
 };
+
+type CreateProjectResponse = { createProject: { project: { id: number } } };

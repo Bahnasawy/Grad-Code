@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { grammarQuery, parse, updateGrammarMutation } from "providers/grammar";
+import { grammarQuery, idGrammarQuery, parse, updateGrammarMutation } from "providers/grammar";
 import React, { useEffect, useState } from "react";
 import { VscLoading } from "react-icons/vsc";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,7 +18,10 @@ export default function GrammarC() {
 	const [name, setName] = useState<string>("");
 
 	// SECTION Data Fetching
-	const grammar = useQuery<{ grammar: Grammar }>(grammarQuery, { variables: { id: 1 } });
+	const grammar = useQuery<{ grammar: Grammar }>(idGrammarQuery, {
+		variables: { id: 5 },
+		// skip: router.query.id != undefined,
+	});
 	const [updateGrammar, { data, loading }] = useMutation<UpdateGrammarResponse>(updateGrammarMutation, {
 		variables: { id: 1, name, string },
 	});
@@ -30,11 +33,17 @@ export default function GrammarC() {
 	}, [data, router]);
 
 	useEffect(() => {
-		if (grammar.data?.grammar.id) {
+		if (grammar.data?.grammar?.id) {
 			setString(grammar.data.grammar.string);
 			setName(grammar.data.grammar.name);
 		}
 	}, [grammar]);
+
+	useEffect(() => {
+		if (router.query.id != undefined && !grammar.called) {
+			grammar.refetch();
+		}
+	}, [grammar, router.query.id]);
 
 	return (
 		<div className="flex gap-8">

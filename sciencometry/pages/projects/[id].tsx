@@ -12,7 +12,7 @@ export default function Project() {
 	//SECTION Data Fetch
 	const router = useRouter();
 	const { id } = router.query;
-	const project = useQuery<Projects>(projectsQuery, { variables: { id: 1 } });
+	const project = useQuery<Projects>(projectsQuery, { variables: { id: 3 } });
 
 	//SECTION States
 	const [author, setAuthor] = useState("");
@@ -24,6 +24,11 @@ export default function Project() {
 	});
 
 	//SECTION Effects
+	useEffect(() => {
+		if (router.asPath && !project.called) {
+			project.refetch();
+		}
+	}, [router.asPath]);
 	// useEffect(() => {
 	// 	id && project.refetch();
 	// }, [id]);
@@ -53,7 +58,11 @@ export default function Project() {
 								</label>
 								<select
 									name="author"
-									onChange={(event) => setAuthor(event.target.value)}
+									onChange={(event) => {
+										setText("");
+										setFeature("");
+										setAuthor(event.target.value);
+									}}
 									className="w-48 px-2 py-1 rounded"
 								>
 									<option value=""></option>
@@ -71,8 +80,12 @@ export default function Project() {
 								</label>
 								<Select
 									name="text"
-									onChange={(event) => setText(event.target.value)}
+									onChange={(event) => {
+										setText(event.target.value);
+										setFeature("");
+									}}
 									className="w-48 px-2 py-1 rounded"
+									value={text}
 								>
 									<option value=""></option>
 
@@ -90,7 +103,7 @@ export default function Project() {
 							<label htmlFor="freature" className="mr-1">
 								Feature:
 							</label>
-							<Select name="feature" onChange={(event) => setFeature(event.target.value)}>
+							<Select name="feature" onChange={(event) => setFeature(event.target.value)} value={feature}>
 								<option value=""></option>
 
 								{project.data?.projects.nodes[0] &&
