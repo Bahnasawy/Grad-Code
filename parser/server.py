@@ -8,13 +8,17 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/', methods=["POST"])
-def hello_world():
+def bulk():
     response = {}
     for author, texts in request.json['texts'].items():
         response[author] = {}
         for title, content in texts.items():
             response[author][title] = parseText(content, request.json['grammar'])
     return response
+
+@app.route('/single', methods=["POST"])
+def single():
+    return parseText(request.json['content'], request.json['grammar'])
 
 app.run()
 
