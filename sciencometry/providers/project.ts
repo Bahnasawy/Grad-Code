@@ -21,7 +21,7 @@ export const createProjectMutation = gql`
 	}
 `;
 
-export const chiDistance = (project: Project) => {
+export const chiDistance = (project: Project): { [author: string]: { [feature: string]: number } } => {
 	const counts: CountsObject = {};
 	let jointCounts: { [author: string]: { [feature: string]: number } } = {};
 	const authorCounts: { [author: string]: { [feature: string]: number } } = {};
@@ -62,8 +62,6 @@ export const chiDistance = (project: Project) => {
 			const expectedAuthorCount = count * authorShare;
 			const expectedDisputedCount = count * (1 - authorShare);
 
-			// console.log(authorShare);
-
 			chiDistances[author][feature] = 0;
 
 			chiDistances[author][feature] +=
@@ -76,9 +74,7 @@ export const chiDistance = (project: Project) => {
 		});
 	});
 
-	// console.log(chiDistances);
-
-	return 0;
+	return chiDistances;
 };
 
 export const createProject = async (texts: any, grammar: Array<Grammar>) => {

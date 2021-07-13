@@ -19,7 +19,7 @@ export default function Projects() {
 	const user = useRecoilValue(userAtom);
 
 	//SECTION Data Fetching
-	const projects = useQuery<Projects>(projectsQuery, { variables: { id: user } });
+	const projects = useQuery<Projects>(projectsQuery, { variables: { id: user }, fetchPolicy: "network-only" });
 
 	return (
 		<div>

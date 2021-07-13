@@ -18,6 +18,7 @@ export default function NewGrammar() {
 	const [string, setString] = useState<string>("");
 	const [test, setTest] = useState<string>("");
 	const [name, setName] = useState<string>("");
+	const [result, setResult] = useState<any>();
 
 	// SECTION Mutation
 	const [addGrammar, { data, loading }] = useMutation<CreateGrammarResponse>(createGrammarMutation, {
@@ -53,7 +54,7 @@ export default function NewGrammar() {
 						placeholder="Grammar String"
 						onChange={(e) => setString(e.target.value)}
 					/>
-					<GreenButton onClick={() => parse(string, test)}>Parse</GreenButton>
+					<GreenButton onClick={async () => name && setResult(await parse(string, test, name))}>Parse</GreenButton>
 				</div>
 
 				{/* SECTION Test Text */}
@@ -63,8 +64,25 @@ export default function NewGrammar() {
 						placeholder="Test Text"
 						onChange={(e) => setTest(e.target.value)}
 					/>
-					<div className="flex-1">
+					<div className="flex flex-col flex-1 gap-1 ">
 						<p className="text-2xl font-semibold">Result</p>
+						<div>
+							{result &&
+								name &&
+								result[name].map((item: any, index: number) => (
+									<div
+										key={item[0][0].join(" ") + index.toString() + Math.random().toString()}
+										className="flex flex-row flex-wrap items-center gap-4 pt-8"
+									>
+										{item.map((word: any, index: number) => (
+											<Word active={word[2]} key={word[0].join(" ") + index.toString() + Math.random().toString()}>
+												<p className="text-lg font-bold">{word[0].join(" ")}</p>
+												<p>{word[1]}</p>
+											</Word>
+										))}
+									</div>
+								))}
+						</div>
 					</div>
 				</div>
 				<div className="flex justify-end">
@@ -134,3 +152,9 @@ const tags: Array<[string, string]> = [
 	["<WP$>", "Possessive wh-pronoun"],
 	["<WRB>", "Wh-adverb"],
 ];
+
+const Word = styled.div(({ active }: { active: boolean }) => [
+	tw`flex flex-col items-center px-2 transition duration-300 ease-in-out rounded cursor-pointer`,
+	tw`hover:bg-teal-500`,
+	active && tw`bg-green-600 text-gray-50`,
+]);

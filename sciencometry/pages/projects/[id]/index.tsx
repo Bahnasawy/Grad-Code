@@ -18,6 +18,7 @@ export default function Project() {
 	const [text, setText] = useState("");
 	const [feature, setFeature] = useState("");
 	const [id, setId] = useState<number>();
+	const [analysis, setAnalysis] = useState<{ [author: string]: { [feature: string]: number } }>();
 
 	//SECTION Effects
 	useEffect(() => {
@@ -34,7 +35,7 @@ export default function Project() {
 
 	useEffect(() => {
 		if (project.data) {
-			chiDistance(project.data.project);
+			setAnalysis(chiDistance(project.data.project));
 		}
 	}, [project.data]);
 
@@ -123,6 +124,22 @@ export default function Project() {
 					</Select>
 				</div>
 			</div>
+
+			{/* SECTION Analysis */}
+			<div className="flex items-center gap-4">
+				{analysis &&
+					Object.entries(analysis).map(([author, features]) => (
+						<div key={author} className="flex flex-col gap-2">
+							<p className="text-xl font-semibold">{author}</p>
+							<div>
+								{Object.entries(features).map(([feature, chi]) => (
+									<p key={feature}>{`${feature}: ${chi}`}</p>
+								))}
+							</div>
+						</div>
+					))}
+			</div>
+
 			{/* SECTION Text */}
 			<div className="flex flex-wrap w-full gap-8 overflow-y-auto divide-y-2 divide-gray-900 max-h-192">
 				{project.data?.project &&

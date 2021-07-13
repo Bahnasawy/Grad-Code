@@ -93,7 +93,7 @@ export default function GrammarC() {
 					/>
 					<div className="flex flex-col flex-1 gap-1 ">
 						<p className="text-2xl font-semibold">Result</p>
-						<div>
+						<div className="overflow-y-auto max-h-96">
 							{result &&
 								grammar.data?.grammar.name &&
 								result[grammar.data?.grammar.name].map((item: any, index: number) => (

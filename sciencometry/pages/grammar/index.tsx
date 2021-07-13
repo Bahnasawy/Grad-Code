@@ -16,7 +16,7 @@ export default function Grammar() {
 	const user = useRecoilValue(userAtom);
 
 	//SECTION Data Fetching
-	const grammars = useQuery<Grammars>(grammarsQuery, { variables: { id: user } });
+	const grammars = useQuery<Grammars>(grammarsQuery, { variables: { id: user }, fetchPolicy: "network-only" });
 
 	// SECTION States
 	const [search, setSearch] = useState("");
