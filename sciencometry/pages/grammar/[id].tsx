@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { grammarQuery, idGrammarQuery, parse, updateGrammarMutation } from "providers/grammar";
+import { idGrammarQuery, parse, updateGrammarMutation } from "providers/grammar";
 import React, { useEffect, useState } from "react";
 import { VscLoading } from "react-icons/vsc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styled from "styled-components";
 import { GreenButton } from "styles/globals";
 import { GrammarInput } from "styles/grammar";
 import tw from "twin.macro";
@@ -16,15 +17,15 @@ export default function GrammarC() {
 	const [string, setString] = useState<string>("");
 	const [test, setTest] = useState<string>("");
 	const [name, setName] = useState<string>("");
+	const [id, setId] = useState<number>();
+	const [result, setResult] = useState<any>();
 
 	// SECTION Data Fetching
-	const grammar = useQuery<{ grammar: Grammar }>(idGrammarQuery, {
-		variables: { id: 5 },
-		// skip: router.query.id != undefined,
+	const [getGrammar, grammar] = useLazyQuery<{ grammar: Grammar }>(idGrammarQuery, {
+		fetchPolicy: "no-cache",
 	});
-	const [updateGrammar, { data, loading }] = useMutation<UpdateGrammarResponse>(updateGrammarMutation, {
-		variables: { id: 1, name, string },
-	});
+
+	const [updateGrammar, { data, loading }] = useMutation<UpdateGrammarResponse>(updateGrammarMutation);
 
 	useEffect(() => {
 		if (data?.updateGrammar.grammar.id) {
@@ -37,13 +38,17 @@ export default function GrammarC() {
 			setString(grammar.data.grammar.string);
 			setName(grammar.data.grammar.name);
 		}
-	}, [grammar]);
+	}, [grammar.data]);
 
 	useEffect(() => {
-		if (router.query.id != undefined && !grammar.called) {
-			grammar.refetch();
+		if (router.isReady && typeof router.query.id == "string") {
+			setId(parseInt(router.query.id));
 		}
-	}, [grammar, router.query.id]);
+	}, [router]);
+
+	useEffect(() => {
+		id && !grammar.called && getGrammar({ variables: { id } });
+	}, [getGrammar, grammar.called, id]);
 
 	return (
 		<div className="flex gap-8">
@@ -63,13 +68,20 @@ export default function GrammarC() {
 
 				{/* SECTION Grammar String */}
 				<div className="flex items-center gap-4">
-					<GrammarInput
+					<textarea
 						value={string}
-						type="text"
 						placeholder="Grammar String"
 						onChange={(e) => setString(e.target.value)}
+						rows={6}
+						className="w-full p-1 border border-gray-400 rounded"
 					/>
-					<GreenButton onClick={() => parse(string, test)}>Parse</GreenButton>
+					<GreenButton
+						onClick={async () =>
+							grammar.data?.grammar.name && setResult(await parse(string, test, grammar.data?.grammar.name))
+						}
+					>
+						Parse
+					</GreenButton>
 				</div>
 
 				{/* SECTION Test Text */}
@@ -79,15 +91,32 @@ export default function GrammarC() {
 						placeholder="Test Text"
 						onChange={(e) => setTest(e.target.value)}
 					/>
-					<div className="flex-1">
+					<div className="flex flex-col flex-1 gap-1 ">
 						<p className="text-2xl font-semibold">Result</p>
+						<div>
+							{result &&
+								grammar.data?.grammar.name &&
+								result[grammar.data?.grammar.name].map((item: any, index: number) => (
+									<div
+										key={item[0][0].join(" ") + index.toString() + Math.random().toString()}
+										className="flex flex-row flex-wrap items-center gap-4 pt-8"
+									>
+										{item.map((word: any, index: number) => (
+											<Word active={word[2]} key={word[0].join(" ") + index.toString() + Math.random().toString()}>
+												<p className="text-lg font-bold">{word[0].join(" ")}</p>
+												<p>{word[1]}</p>
+											</Word>
+										))}
+									</div>
+								))}
+						</div>
 					</div>
 				</div>
 				<div className="flex justify-end">
 					<GreenButton
 						onClick={() => {
 							if (name && grammar) {
-								updateGrammar();
+								updateGrammar({ variables: { id, name, string } });
 							} else {
 								toast("Please fill both name and grammar");
 							}
@@ -150,3 +179,9 @@ const tags = [
 	["WP$", "Possessive wh-pronoun"],
 	["WRB", "Wh-adverb"],
 ];
+
+const Word = styled.div(({ active }: { active: boolean }) => [
+	tw`flex flex-col items-center px-2 transition duration-300 ease-in-out rounded cursor-pointer`,
+	tw`hover:bg-teal-500`,
+	active && tw`bg-green-600 text-gray-50`,
+]);

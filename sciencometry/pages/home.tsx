@@ -34,8 +34,8 @@ export default function Home() {
 
 const Title = styled.p(() => [tw`text-2xl font-semibold`]);
 
-const Container = styled.div(() => [tw`flex flex-col gap-4`]);
+const Container = styled.div(() => [tw`flex flex-col h-full gap-4`]);
 
 const Part = styled.div(() => [tw`flex flex-col gap-2`]);
 
-const Recents = styled.div(() => [tw`flex h-40 gap-4 overflow-auto`]);
+const Recents = styled.div(() => [tw`flex h-40 gap-4`]);

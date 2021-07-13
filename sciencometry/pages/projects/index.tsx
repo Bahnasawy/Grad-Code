@@ -19,7 +19,7 @@ export default function Projects() {
 	const user = useRecoilValue(userAtom);
 
 	//SECTION Data Fetching
-	const projects = useQuery<Projects>(projectsQuery, { variables: { id: 1 } });
+	const projects = useQuery<Projects>(projectsQuery, { variables: { id: user } });
 
 	return (
 		<div>
@@ -39,8 +39,8 @@ export default function Projects() {
 					{/* SECTION Headers */}
 					<div className="flex flex-row justify-between text-lg font-bold text-left">
 						<div className="flex flex-row">
-							<p className="w-32">Name</p>
-							<p className="w-32">Description</p>
+							<p className="w-96">Name</p>
+							<p className="w-96">Description</p>
 						</div>
 						<p>Created At</p>
 					</div>
@@ -57,8 +57,8 @@ export default function Projects() {
 										onClick={() => router.push(`/projects/${project.id}`)}
 									>
 										<div className="flex flex-row">
-											<p className="w-32">{project.name}</p>
-											<p className="w-32">{project.description}</p>
+											<p className="w-96">{project.name}</p>
+											<p className="w-96">{project.description}</p>
 										</div>
 										<p>{project.createdAt}</p>
 									</Project>

@@ -1,8 +1,10 @@
 import { gql } from "@apollo/client";
+import axios from "axios";
 
-export const parse = (grammar: string, test: string) => {
+export const parse = async (grammar: string, test: string, name: string) => {
 	if (grammar && test) {
-		console.log(`${grammar}, ${test}`);
+		return (await axios.post("http://localhost:5000/single", { content: test, grammar: [{ string: grammar, name }] }))
+			.data;
 	}
 };
 

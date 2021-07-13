@@ -11,6 +11,8 @@ import { userAtom } from "atoms";
 import { useQuery } from "@apollo/client";
 
 export default function Login() {
+	const router = useRouter();
+
 	//SECTION States
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -35,7 +37,7 @@ export default function Login() {
 					placeholder="Password"
 					onChange={(event) => hash(event.target.value, 10, (err, hash) => setPassword(hash))}
 				/>
-				<Button className="w-full mt-2" onClick={() => login.refetch()}>
+				<Button className="w-full mt-2" onClick={() => router.push("/home")}>
 					Login
 				</Button>
 				<p className="mt-4 text-xs font-light text-gray-900">

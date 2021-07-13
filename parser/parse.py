@@ -16,8 +16,9 @@ def parseText(text, features):
         else:
             temp.append(token)
 
+    if sentences == []:
+        sentences = [temp]
     pos = nltk.pos_tag_sents(sentences)
-
 
     # Parsing
     results = []
@@ -26,7 +27,6 @@ def parseText(text, features):
         for sent in pos:
             temp.append(nltk.RegexpParser(feature["string"]).parse(sent))
         results.append(temp)
-
 
     # Clean Up and Separation of features results
     featuresTags = {}
@@ -46,3 +46,6 @@ def parseText(text, features):
         featuresTags[features[idx]["name"]] = sents
 
     return featuresTags
+
+def parseSingle(text, features):
+    tokens = nltk.tokenize.word_tokenize(text)

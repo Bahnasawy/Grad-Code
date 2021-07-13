@@ -7,14 +7,16 @@ import { useRouter } from "next/router";
 import { navigate } from "styles/_app";
 import { useQuery } from "@apollo/client";
 import { grammarsQuery } from "providers/projects";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "atoms";
 
 export default function Grammar() {
 	const router = useRouter();
 
-	// const user =
+	const user = useRecoilValue(userAtom);
 
 	//SECTION Data Fetching
-	const grammars = useQuery<Grammars>(grammarsQuery, { variables: { id: 1 } });
+	const grammars = useQuery<Grammars>(grammarsQuery, { variables: { id: user } });
 
 	// SECTION States
 	const [search, setSearch] = useState("");
@@ -37,8 +39,8 @@ export default function Grammar() {
 					{/* SECTION Headers */}
 					<div className="flex flex-row justify-between text-lg font-bold text-left">
 						<div className="flex flex-row">
-							<p className="w-32">Name</p>
-							<p className="w-32">Author</p>
+							<p className="w-96">Name</p>
+							<p className="w-96">Author</p>
 						</div>
 						<p>Created At</p>
 					</div>
@@ -51,8 +53,8 @@ export default function Grammar() {
 								.map(({ name, author, createdAt, id }) => (
 									<Button key={name + author} onClick={() => router.push(`/grammar/${id}`)}>
 										<div className="flex flex-row">
-											<p className="w-32">{name}</p>
-											<p className="w-32">{author.username}</p>
+											<p className="w-96">{name}</p>
+											<p className="w-96">{author.username}</p>
 										</div>
 										<p>{createdAt}</p>
 									</Button>

@@ -3,7 +3,7 @@ import JSZip from "jszip";
 
 export const projectsQuery = gql`
 	query ($id: Int) {
-		projects(filter: { id: { equalTo: $id } }) {
+		projects(filter: { createdBy: { equalTo: $id } }) {
 			nodes {
 				id
 				name
@@ -15,6 +15,21 @@ export const projectsQuery = gql`
 				data
 			}
 			totalCount
+		}
+	}
+`;
+
+export const idProjectQuery = gql`
+	query ($id: Int!) {
+		project(id: $id) {
+			id
+			name
+			description
+			userByCreatedBy {
+				id
+			}
+			createdAt
+			data
 		}
 	}
 `;

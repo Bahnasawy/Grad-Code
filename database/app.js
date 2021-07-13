@@ -7,7 +7,7 @@ const { SCHEMA, PG_DEFAULT_ROLE, POSTGRES_CONNECTION } = process.env;
 const app = express();
 app.use(cors());
 app.use(
-	postgraphile("postgres://postgres:@192.168.1.111:5432/grad", "public", {
+	postgraphile("postgres://postgres:@localhost:5432/grad", "public", {
 		dynamicJson: true,
 		graphqlRoute: "/",
 		extendedErrors: ["hint", "detail", "errcode"],
