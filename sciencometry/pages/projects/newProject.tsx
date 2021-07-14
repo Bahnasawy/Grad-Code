@@ -13,6 +13,8 @@ import tw from "twin.macro";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createProject, createProjectMutation } from "providers/project";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "atoms";
 
 export default function NewProjects() {
 	const router = useRouter();
@@ -25,6 +27,8 @@ export default function NewProjects() {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>("");
 	const [selected, setSelected] = useState<Array<Grammar>>([]);
+
+	const user = useRecoilValue(userAtom);
 
 	//SECTION JSZip
 	let jszip = useRef<JSZip>(new JSZip());
@@ -182,7 +186,7 @@ export default function NewProjects() {
 							onClick={async () => {
 								if (name && inflated && selected.length) {
 									const res = await createProject(inflated, selected);
-									addProject({ variables: { name, createdBy: 1, data: res } });
+									addProject({ variables: { name, createdBy: user, data: res } });
 								} else {
 									toast("Please upload texts and select grammar.");
 								}

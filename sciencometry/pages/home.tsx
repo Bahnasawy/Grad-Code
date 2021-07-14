@@ -1,12 +1,16 @@
 import { useQuery } from "@apollo/client";
+import { userAtom } from "atoms";
 import Recent from "components/home/Recent";
 import { homeQuery } from "providers/home";
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import tw from "twin.macro";
 
 export default function Home() {
-	const recent = useQuery<HomeResponse>(homeQuery, { variables: { id: 1 } });
+	const user = useRecoilValue(userAtom);
+
+	const recent = useQuery<HomeResponse>(homeQuery, { variables: { id: user }, fetchPolicy: "network-only" });
 
 	return (
 		<Container>
